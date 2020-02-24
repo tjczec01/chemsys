@@ -1,6 +1,6 @@
 1. Create  list of names as string
 
-2.  Use <<<symfunc(nameslist, number_of_reactions) >>> to get the Chemical species symbols, K symbols, Ea symbols, and Temperature symbols.
+2.  Use '''symfunc(nameslist, number_of_reactions) ''' to get the Chemical species symbols, K symbols, Ea symbols, and Temperature symbols.
 
 3. Use <<<init(Initreactions, Csymbols)>>> to get the reactants and products for each individual reaction.
 
