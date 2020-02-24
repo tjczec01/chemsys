@@ -20,7 +20,7 @@
  equations, latexs = eqlist(Eqlist, reactants, products)
  ``` 
 ### 4. dislat(nameslist, latexs, indvar)
-#### Generates the Latex/latex forms of the equations that are used to display and save the equations to pdf/svg. (z is the independent variable) 
+#### Generates the Latex/latex forms of the equations that are used to display and save the equations to pdf/svg. 
 ```
 slatex, dlatex = dislat(nameslist, latexs, indvar)
 ``` 
