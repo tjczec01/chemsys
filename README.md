@@ -19,7 +19,7 @@ This program will generate the **Latex** forms of each individual reaction and t
 # 3. Right Hand Side 
 
 
-The right hand side (**RHS**) of the system of equations will be generated both symbolically and with initial values substituted into their respective places. This is the required system for scipy's [solve_ivp](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) and [odeint](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html#scipy.integrate.odeint) method. This function requires a callable in the form of  ``` fun(t,y ):```
+The right hand side (**RHS**) of the system of equations will be generated both symbolically and with initial values substituted into their respective places. This is the required system for scipy's [solve_ivp](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) and [odeint](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html#scipy.integrate.odeint) method. This function requires a callable in the form of  ``` fun(t, y):```
 * [Symbolic Generator](https://github.com/tjczec01/symbolgen/blob/master/symbolgen.ipynb)
 
 # 4. Jacobian 
