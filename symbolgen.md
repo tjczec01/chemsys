@@ -29,7 +29,7 @@ $$R_{3} \rightleftharpoons R_{1} + VCM$$
 $$R_{5} \rightleftharpoons C_{2}H_{2} + R_{1}$$
 $$R_{6} \rightleftharpoons Di + R_{1}$$
 $$2*C_{2}H_{2} + R_{5} \longrightarrow C_{6}H_{6} + R_{1}$$
-$$C_{2}H_{2} + 2*R_{1} \longrightarrow 2*Coke + 2*HCl$$
+$C_{2}H_{2} + 2*R_{1} \longrightarrow 2*Coke + 2*HCl$
 
 # 2. Overall reactions for each chemical species
 
