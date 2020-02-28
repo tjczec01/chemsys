@@ -1,3 +1,5 @@
+\usepackage[hybrid]{markdown}
+\begin{markdown}
 # Symbol Generator
 
 *symbolgen.py* is a Gui based chemical reaction system generator that generates the right hand side (**RHS**) of a chemical system to be used with the [solve_ivp](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) and [odeint](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html#scipy.integrate.odeint)  method, the **jacobian**, and the overall equations for each reations and each individual chemical species. It will generate **Latex** formatted equations for the individual chemical reactions, overall mass balances for each species, and both symbolic and numerical text files for the **RHS** and **jacobian**.
@@ -104,7 +106,7 @@ $$\mathbf{J}
 \frac{\partial f_m}{\partial y_1} & \cdots & 
 \frac{\partial f_m}{\partial y_n}
 \end{bmatrix}$$
-
+\end{markdown}
 
 ```python
 def jacob(t, y):
