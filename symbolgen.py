@@ -652,8 +652,8 @@ class symbolgen:
                              if jjj < jj:
                                     output.write('{},\n'.format(Jrow))
                              elif jjj >= jj:
-                                    output.write('{}'.format(Jrow))
-                     output.write("]")
+                                    output.write('{}]'.format(Jrow))
+                     
               
               with open("{}\JacobianMatrix.txt".format(ffpath),'w') as output:
                             output.write('{}'.format(JacM))
