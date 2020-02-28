@@ -733,6 +733,6 @@ names = ['EDC','EC','HCl','Coke', 'CP','Di','C4H6Cl2','C6H6','C2H2','C11','C112'
 ea = [i*1000.0 for i in eaf]
 RRv = RR[0]
 rxnnumf = rxnsvl[0]
-C, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacn, jacM, lm, latexmatrix = symbolgen.fullgen(names, rxnnumf, Initreactions, Eqlist, indvdf[0], ffpath[0], kk, ea, RRv)
+C, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacn, jacM, lm, latexmatrix = symbolgen.fullgen(chemnamesl, rxnnumf, Initreactions, Eqlist, indvdf[0], ffpath[0], kk, ea, RRv)
 print(rhs)
 print(rhsf)
