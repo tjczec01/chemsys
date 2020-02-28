@@ -12,7 +12,7 @@ This program will generate the **Latex** forms of each individual reaction and t
 ## <center> <b>List of Reactions</b>
 
 
-
+```math
 $EDC \longrightarrow R_{1} + R_{2}$
 $EDC + R_{1} \longrightarrow HCl + R_{3}$
 $EDC + R_{2} \longrightarrow EC + R_{3}$
@@ -34,7 +34,7 @@ $R_{5} \rightleftharpoons C_{2}H_{2} + R_{1}$
 $R_{6} \rightleftharpoons Di + R_{1}$
 $2*C_{2}H_{2} + R_{5} \longrightarrow C_{6}H_{6} + R_{1}$
 $C_{2}H_{2} + 2*R_{1} \longrightarrow 2*Coke + 2*HCl$
-
+```
 # 2. Overall reactions for each chemical species
 
 This program will generate the **Latex** forms of each individual reaction and then save them as both a **pdf** and **svg**. The string forms of the equations will be saved in a **text** (txt) file. An example of some inital reactions are given below.
@@ -82,9 +82,9 @@ def RHS(t, y):
 The **Jacobian matrix** is symbolically generated in order to improve the accuracy and speed of the solvers used in the aforementioned method.
 
 
-
+```math
 $\mathbf{f(t, y)} =\mathbf{f(t, C_{EDC}, C_{EC}, C_{HCl}, C_{Coke}, C_{CP}, C_{Di}, C_{C4H6Cl2}, C_{C6H6}, C_{C2H2}, C_{C11}, C_{C112}, C_{R1}, C_{R2}, C_{R3}, C_{R4}, C_{R5}, C_{R6}, C_{VCM}, T)}$
-
+```
 
 
 
