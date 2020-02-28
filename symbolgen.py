@@ -638,8 +638,8 @@ class symbolgen:
                             if lr < ll:
                                    output.write('{},\n'.format(rhsff))
                             elif lr >= ll:
-                                  
-                                   
+                                   # output.seek(0, 2)
+                                   # output.seek(output.tell() - 2, 0)
                                    output.write("{}]".format(rhsff))
                             
               with open(r"{}\Jacobun.txt".format(ffpath), "w") as output:
