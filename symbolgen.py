@@ -638,17 +638,21 @@ class symbolgen:
                             if lr < ll:
                                    output.write('{},\n'.format(rhsff))
                             elif lr >= ll:
-                                   # output.seek(0, 2)
-                                   # output.seek(output.tell() - 2, 0)
+                                  
+                                   
                                    output.write("{}]".format(rhsff))
                             
               with open(r"{}\Jacobun.txt".format(ffpath), "w") as output:
                      output.write("[")
+                     jj = len(Jac) - 1
+                     jjj = 0
                      for i in range(len(Jac)):
+                             jjj += 1
                              Jrow = Jac[i][:]
-                             output.write('{},\n'.format(Jrow))
-                     output.seek(0, 2)
-                     output.seek(output.tell() - 2, 0)
+                             if jjj < jj:
+                                    output.write('{},\n'.format(Jrow))
+                             elif jjj >= jj:
+                                    output.write('{}'.format(Jrow))
                      output.write("]")
               
               with open("{}\JacobianMatrix.txt".format(ffpath),'w') as output:
