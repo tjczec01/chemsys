@@ -2,7 +2,7 @@
 Generator for symbolic functions for both full and simple systems
 * [Symbolic Generator](https://github.com/tjczec01/symbolgen/blob/master/symbolgen.ipynb)
 
-```math    
+``python  
 $EDC \longrightarrow R_{1} + R_{2}$ 
 
 $EDC + R_{1} \longrightarrow HCl + R_{3}$ 
