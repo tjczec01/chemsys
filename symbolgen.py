@@ -624,7 +624,6 @@ class symbolgen:
                      ll = len(rhseq) - 1
                      for rhs in rhseq:
                             lr = rhseq.index(rhs)
-                            # print(lr)
                             if lr < ll:
                                    output.write('{},\n'.format(rhs))
                             elif lr >= ll:
@@ -633,12 +632,15 @@ class symbolgen:
               with open(r"{}\RHS.txt".format(ffpath), "w") as output:
                      output.write("[")
                      ll = len(rhseqf) - 1
-                     for rhs in rhseq:
-                            lr = rhseq.index(rhs)
+                     lr = 0
+                     for rhsff in rhseqf:
+                            lr += 1
                             if lr < ll:
-                                   output.write('{},\n'.format(rhs))
+                                   output.write('{},\n'.format(rhsff))
                             elif lr >= ll:
-                                   output.write('{}]'.format(rhs))
+                                   # output.seek(0, 2)
+                                   # output.seek(output.tell() - 2, 0)
+                                   output.write("{}]".format(rhsff))
                             
               with open(r"{}\Jacobun.txt".format(ffpath), "w") as output:
                      output.write("[")
@@ -670,9 +672,8 @@ class symbolgen:
                                 line=line.replace("exp","sp.exp")
                                 if lffb < lfia:
                                           fileout.write('{}'.format(line))
-                                          # fileout.write(',\n'.format(line))
-                                elif lffb == lfia:
-                                          fileout.write('{}]'.format(line))
+                                elif lffb >= lfia:
+                                          fileout.write('{}'.format(line))
                          
               with open("{}\RHSsymbols.txt".format(ffpath)) as filein, open("{}\RightHandSideSymbols.txt".format(ffpath),'w') as fileout:
                             fileinl = filein.readlines()        
@@ -684,9 +685,9 @@ class symbolgen:
                                 lff += 1
                                 if lff < lfi:
                                           fileout.write('{}'.format(line))
-                                          # fileout.write('\n'.format(line))
-                                elif lff == lfi:
-                                          fileout.write('{}]'.format(line))
+                                elif lff >= lfi:
+                                       
+                                          fileout.write('{}'.format(line))
                                           
                      
               pickle.dumps(JacM)      
