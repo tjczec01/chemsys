@@ -10,6 +10,8 @@ This program will generate the **Latex** forms of each individual reaction and t
 ## <center> <b>List of Reactions</b>
 
 ```python
+%%latex
+
 $$EDC \longrightarrow R_{1} + R_{2}$$
 $$EDC + R_{1} \longrightarrow HCl + R_{3}$$
 $$EDC + R_{2} \longrightarrow EC + R_{3}$$
