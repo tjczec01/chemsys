@@ -10,9 +10,9 @@ This program will generate the **Latex** forms of each individual reaction and t
 ## <center> <b>List of Reactions</b>
 
 
-%%latex
 
-$$EDC \longrightarrow R_{1} + R_{2}$$
+
+EDC \longrightarrow R_{1} + R_{2}
 $$EDC + R_{1} \longrightarrow HCl + R_{3}$$
 $$EDC + R_{2} \longrightarrow EC + R_{3}$$
 $$EDC + R_{4} \longrightarrow C_{11}$$
