@@ -8,7 +8,8 @@
 This program will generate the **Latex** forms of each individual reaction and then save them as both a **pdf** and **svg**. The string forms of the equations will be saved in a **text** (txt) file. An example of some inital reactions are given below.
 
 ## <center> <b>List of Reactions</b>
-    
+
+```python
 $$EDC \longrightarrow R_{1} + R_{2}$$
 $$EDC + R_{1} \longrightarrow HCl + R_{3}$$
 $$EDC + R_{2} \longrightarrow EC + R_{3}$$
@@ -29,8 +30,8 @@ $$R_{3} \rightleftharpoons R_{1} + VCM$$
 $$R_{5} \rightleftharpoons C_{2}H_{2} + R_{1}$$
 $$R_{6} \rightleftharpoons Di + R_{1}$$
 $$2*C_{2}H_{2} + R_{5} \longrightarrow C_{6}H_{6} + R_{1}$$
-$C_{2}H_{2} + 2*R_{1} \longrightarrow 2*Coke + 2*HCl$
-
+$$C_{2}H_{2} + 2*R_{1} \longrightarrow 2*Coke + 2*HCl$$
+```
 # 2. Overall reactions for each chemical species
 
 This program will generate the **Latex** forms of each individual reaction and then save them as both a **pdf** and **svg**. The string forms of the equations will be saved in a **text** (txt) file. An example of some inital reactions are given below.
