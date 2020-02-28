@@ -428,7 +428,7 @@ class symbolgen:
                             ptotal = sp.Mul(ptotal,tt)
                      reactants.append(sp.Mul(Ks,sp.Mul(rtotal,ee)))
                      products.append(sp.Mul(Ks,sp.Mul(ptotal,ee)))
-              return reactants, products
+              return [reactants, products]
        
        def eqlist(eqlistl, R, P):
               reactants = R
@@ -455,7 +455,7 @@ class symbolgen:
                             rlatex = sp.latex(eeqn)
                             leqns.append(rlatex)
                             EQS.append(eeqn)
-              return EQS, leqns
+              return [EQS, leqns]
        
        def dislat(lnames, latexs, indvar):
               Latexs = []
@@ -512,8 +512,9 @@ class symbolgen:
                      eqn3 = e.subs(kdictionary)
                      eqn4 = eqn3.subs(eadictionary)
                      eqn5 = eqn4.subs({'R' : 8.31446261815324})
-                     eqn6 = eqn5.subs({'*exp' : '*sp.exp'})
-                     EQLISTF.append(eqn6)
+                     eqn6 = str(r'{}'.format(eqn5.subs({'*exp' : '*sp.exp'})))
+                     eqn6b = eqn5.subs({'*exp' : '*sp.exp'})
+                     EQLISTF.append(eqn6b)
                      EQLIST.append(eqn[0])
                      
               return EQLIST, EQLISTF
@@ -523,16 +524,22 @@ class symbolgen:
               eqnl = len(funcs)
               cl = len(y)
               J  = [[i for i in range(cl)] for j in range(eqnl)]
+              Jn  = [[i for i in range(cl)] for j in range(eqnl)]
               mfunc = lambda i, j: sp.diff(funcs[i], y[j])
               Jjj = sp.Matrix(eqnl, cl, lambda i, j: mfunc(i, j))
               Jj = sp.matrix2numpy(Jjj)
               for i in range(eqnl):
                       for j in range(cl):
                              J[i][j] = str('{}'.format('{}'.format(mfunc(i, j)).replace('*exp',  '*sp.exp')))
-              MatrixJ = sp.Matrix(Jj)
+              for i in range(eqnl):
+                      for j in range(cl):
+                             Jn[i][j] = str('{}'.format('{}'.format(mfunc(i, j)).replace('*exp',  '*np.exp')))
+              MatrixJ = sp.simplify(sp.Matrix(Jj))
               LatexMatrix = sp.latex(sp.matrix2numpy(sp.Matrix(Jj)))
-              lm = sp.latex(MatrixJ, mat_delim="(" )
-              return J, MatrixJ, lm, LatexMatrix
+              lm = sp.latex(MatrixJ, mode='inline', itex=True, mat_delim="(", mat_str='array')
+              display(lm)
+              # print(lm)
+              return J, Jn,  MatrixJ, lm, LatexMatrix
        
        def sysgen(self):
               equations, latexs = self.eqlist(self.Eqlist, self.reactants, self.products)
@@ -563,11 +570,11 @@ class symbolgen:
               slat, dlat = symbolgen.dislat(names, latexss, intz)
               Chem, ChemD, ChemW = symbolgen.chemeq(Cs, rxn, inits)
               RHS, RHSf = symbolgen.rhseqs(equats, kk, ea, r)
-              Jac, Jacm, lm, latexmatrix = symbolgen.jacobian(RHSf, Cs)
+              Jac, JacN, Jacm, lm, latexmatrix = symbolgen.jacobian(RHSf, Cs)
               fp = symbolgen.csave(Chem, filepathf)
               fc = symbolgen.psave(names, dlat, filepathf)
-              ff = symbolgen.fsave(filepathf, equats, dlat, Chem, ChemW, RHS, RHSf, Jac, Jacm, lm, latexmatrix)
-              return Cs, reacts, prods, equats, slat, dlat, Chem, ChemD, ChemW, RHS, RHSf, Jac, Jacm, lm, latexmatrix
+              ff = symbolgen.fsave(filepathf, equats, dlat, Chem, ChemW, RHS, RHSf, Jac, JacN, Jacm, lm, latexmatrix)
+              return Cs, reacts, prods, equats, slat, dlat, Chem, ChemD, ChemW, RHS, RHSf, Jac, JacN, Jacm, lm, latexmatrix
        
        
        def psave(nameslist, LATEXD, fpath):
@@ -598,14 +605,18 @@ class symbolgen:
                      fig.savefig(r'{}\Reaction {}.svg'.format(filename, s), bbox_inches='tight')
                      fig.savefig(r'{}\Reaction {}.pdf'.format(filename, s), bbox_inches='tight')
                      
-       def fsave(ffpath, eqns, eqnslat, crxns, crxnsw, rhseq, rhseqf, Jac, JacM, lm, latexmatrix):
+       def fsave(ffpath, eqns, eqnslat, crxns, crxnsw, rhseq, rhseqf, Jac, JacN, JacM, lm, latexmatrix):
               with open(r"{}\Equations.txt".format(ffpath), "w") as output:
                      output.write("[")
+                     el = len(eqns)
+                     eel = 0
                      for eqn in eqns:
-                            output.write('{},\n'.format(str(eqn)))
-                     output.seek(0, 2)
-                     output.seek(output.tell() - 2, 0)
-                     output.write("]")
+                            eel += 1
+                            print(eel,el)
+                            if eel < el:
+                                   output.write('{},\n'.format(str(eqn)))
+                            if eel >= el:
+                                   output.write('{}]'.format(str(eqn)))
                   
               with open(r"{}\EquationsLatex.txt".format(ffpath), "w") as output:
                      for eqnlat in eqnslat:
@@ -621,30 +632,30 @@ class symbolgen:
                             
               with open(r"{}\RHSsymbols.txt".format(ffpath), "w") as output:
                      output.write("[")
-                     ll = len(rhseq) - 1
+                     ll = len(rhseq)
                      for rhs in rhseq:
                             lr = rhseq.index(rhs)
                             if lr < ll:
                                    output.write('{},\n'.format(rhs))
                             elif lr >= ll:
-                                   output.write('{}]'.format(rhs))
+                                   output.write('{}'.format(rhs))
+                     output.write("]")
               
               with open(r"{}\RHS.txt".format(ffpath), "w") as output:
                      output.write("[")
-                     ll = len(rhseqf) - 1
+                     ll = len(rhseqf)
                      lr = 0
                      for rhsff in rhseqf:
                             lr += 1
                             if lr < ll:
                                    output.write('{},\n'.format(rhsff))
                             elif lr >= ll:
-                                   # output.seek(0, 2)
-                                   # output.seek(output.tell() - 2, 0)
-                                   output.write("{}]".format(rhsff))
+                                   output.write("{}".format(rhsff))
+                     output.write("]")
                             
               with open(r"{}\Jacobun.txt".format(ffpath), "w") as output:
                      output.write("[")
-                     jj = len(Jac) - 1
+                     jj = len(Jac)
                      jjj = 0
                      for i in range(len(Jac)):
                              jjj += 1
@@ -652,8 +663,21 @@ class symbolgen:
                              if jjj < jj:
                                     output.write('{},\n'.format(Jrow))
                              elif jjj >= jj:
-                                    output.write('{}]'.format(Jrow))
-                     
+                                    output.write('{}'.format(Jrow))
+                     output.write("]")
+                                    
+              with open(r"{}\JacobNumpy.txt".format(ffpath), "w") as output:
+                     output.write("[")
+                     jjb = len(JacN)
+                     jjn = 0
+                     for i in range(len(JacN)):
+                             jjn += 1
+                             Jrown = JacN[i][:]
+                             if jjn < jjb:
+                                    output.write('{},\n'.format(Jrown))
+                             elif jjn >= jjb:
+                                    output.write('{}'.format(Jrown))
+                     output.write("]")
               
               with open("{}\JacobianMatrix.txt".format(ffpath),'w') as output:
                             output.write('{}'.format(JacM))
@@ -665,10 +689,17 @@ class symbolgen:
                      for line in filein:
                          line=line.replace("'","")
                          fileout.write(line)
+                     
+                         
+              with open("{}\JacobNumpy.txt".format(ffpath)) as filein, open("{}\JacobianNumpy.txt".format(ffpath),'w') as fileout:
+                     for line in filein:
+                         line=line.replace("'","")
+                         fileout.write(line)
+                     
                          
               with open("{}\RHS.txt".format(ffpath)) as filein, open("{}\RightHandSide.txt".format(ffpath),'w') as fileout:
                             fileinl = filein.readlines()       
-                            lfia = len(fileinl) - 1
+                            lfia = len(fileinl)
                             lffb = 0
                             for line in fileinl:
                                 lffb += 1
@@ -681,7 +712,7 @@ class symbolgen:
                          
               with open("{}\RHSsymbols.txt".format(ffpath)) as filein, open("{}\RightHandSideSymbols.txt".format(ffpath),'w') as fileout:
                             fileinl = filein.readlines()        
-                            lfi = len(fileinl) - 1
+                            lfi = len(fileinl)
                             lff = 0
                             for line in fileinl:
                                 line=line.replace("'","")
@@ -702,6 +733,6 @@ names = ['EDC','EC','HCl','Coke', 'CP','Di','C4H6Cl2','C6H6','C2H2','C11','C112'
 ea = [i*1000.0 for i in eaf]
 RRv = RR[0]
 rxnnumf = rxnsvl[0]
-C, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacM, lm, latexmatrix = symbolgen.fullgen(names, rxnnumf, Initreactions, Eqlist, indvdf[0], ffpath[0], kk, ea, RRv)
+C, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacn, jacM, lm, latexmatrix = symbolgen.fullgen(names, rxnnumf, Initreactions, Eqlist, indvdf[0], ffpath[0], kk, ea, RRv)
 print(rhs)
 print(rhsf)
