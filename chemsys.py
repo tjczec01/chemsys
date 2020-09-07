@@ -591,7 +591,7 @@ class symbolgen:
 
        def psave(nameslist, LATEXD, fpath):
               filename = fpath
-              for s,k in enumerate(LATEXD):
+              for s, k in enumerate(LATEXD):
                      fig = plt.figure()
                      ax = fig.add_axes([0,0,1,1])
                      left, width = .25, .5
@@ -605,7 +605,7 @@ class symbolgen:
 
        def csave(LATEXC, fpath):
               filename = fpath
-              for s,k in enumerate(LATEXC):
+              for s, k in enumerate(LATEXC):
                      fig = plt.figure()
                      ax = fig.add_axes([0,0,1,1])
                      left, width = .25, .5
@@ -614,8 +614,8 @@ class symbolgen:
                      top = bottom + height
                      ax.set_axis_off()
                      text = ax.text(0.5*(left+right), 0.5*(bottom+top),k , va= 'center',ha= 'center', bbox= dict(boxstyle="round", fc="white", alpha= 0.3, ec="black", pad=0.2))
-                     fig.savefig(r'{}\Reaction {}.svg'.format(filename, s), bbox_inches='tight')
-                     fig.savefig(r'{}\Reaction {}.pdf'.format(filename, s), bbox_inches='tight')
+                     fig.savefig(r'{}\Reaction {}.svg'.format(filename, s + 1), bbox_inches='tight')
+                     fig.savefig(r'{}\Reaction {}.pdf'.format(filename, s + 1), bbox_inches='tight')
 
        def fsave(ffpath, eqns, eqnslat, crxns, crxnsw, rhseq, rhseqf, Jac, JacN, JacM, lm, latexmatrix, JacS, JacSN, JacSm, lmS, latexmatrixS, C, EAK):
               with open(r"{}\Equations.txt".format(ffpath), "w") as output:
