@@ -483,7 +483,8 @@ class symbolgen:
             Pvals = list(Products.values())
             Ks = symbols('k_{}'.format(i + 1))
             Eas = symbols('Ea_{}'.format(i + 1))
-            ee = exp(Mul(Eas, Pow(Mul(Symbol('R'), Symbol('T')), Integer(-1))))
+            # ee = exp(Mul(Eas, Pow(Mul(Symbol('R'), Symbol('T')), Integer(-1))))
+            ee = exp(Mul(Mul(Eas, Pow(Mul(Symbol('R'), Symbol('T')), Integer(-1))), Integer(-1)))
             rterms = []
             pterms = []
             rtotal = Integer(1)
