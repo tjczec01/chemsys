@@ -254,10 +254,10 @@ for i in range(0, rxnnum, 1):
     elif rval == 1:
         rstrings.append(str(' <==> '))
 for i in range(0, rxnnum, 1):
-    stringvarsr5.append([StringVar() for i in range(0, reactants_num[i], 1)])
-    stringvarsp5.append([StringVar() for i in range(0, products_num[i], 1)])
-    stringvarsrc.append([StringVar() for i in range(0, reactants_num[i], 1)])
-    stringvarspc.append([StringVar() for i in range(0, products_num[i], 1)])
+    stringvarsr5.append([StringVar(value="1") for i in range(0, reactants_num[i], 1)])
+    stringvarsp5.append([StringVar(value="1") for i in range(0, products_num[i], 1)])
+    stringvarsrc.append([StringVar(value="1") for i in range(0, reactants_num[i], 1)])
+    stringvarspc.append([StringVar(value="1") for i in range(0, products_num[i], 1)])
 
 for i in range(0, rxnnum, 1):
     mainframe5.rowconfigure(i + 1, weight=1)
