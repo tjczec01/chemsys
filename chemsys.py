@@ -154,6 +154,7 @@ for i in range(0, chems_value, 1):
     entries[i].grid(column=2, row=int(i + 1), sticky=(W, N, E, S))
     Label(mainframe3, text="Enter name of chemical species {} ".format(i + 1)).grid(column=1, row=int(i + 1), sticky=(W, N, E, S))
 B3 = Button(root3, text="OK", command=close_window3).grid(column=3, row=1)
+root3.mainloop()
 root4 = Tk()
 root4.title("Reactants & Products")
 mainframe4 = ttk.Frame(root4, padding="3 3 12 12")
