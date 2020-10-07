@@ -351,11 +351,12 @@ for i in range(0, len(chemnamesl), 1):
     valuesrev = [0*ik for ik in range(0, rxnnum, 1)]
     for j in range(0, rxnnum, 1):
         valuef = coeffsr[j][name_index]
-        if valuef != 0:
+        if valuef != 0 and coeffsp[j][name_index] == 0:
             valuesfor[j] = int(-1)
+            valuesrev[j] = int(1*reverse[j])
         elif coeffsp[j][name_index] != 0:
             valuesfor[j] = int(1)
-        valuesrev[j] = coeffsp[j][name_index]*int(-1*reverse[j]) #coeffsp[j][name_index]*
+            valuesrev[j] = int(-1*reverse[j])
     dictionary2 = {"Name": "{}".format(str(namev)), "Reactions": dict(zip(keys, valuesfor)), "Reverse": dict(zip(keys, valuesrev))}
     Eqlist.append(dictionary2)
 
