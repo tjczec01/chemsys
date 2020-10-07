@@ -18,6 +18,16 @@ from tkinter import Tk, ttk, IntVar, StringVar, N, W, E, S, Checkbutton, Label, 
 from tkinter.ttk import Combobox
 import pickle
 import os
+import subprocess
+from shutil import which
+
+def create_pdf(file_in, file_out):
+    # print(which("pdflatex").replace("EXE", "exe") + ' -output-format=pdf ' + r"-output-directory={} ".format(file_out) + "-enable-pipes " + "-enable-mltex " + r"{}".format(file_in))
+    cmds = str('"{}"'.format(which("pdflatex").replace("EXE", "exe") + ' -output-format=pdf ' + r"-output-directory={} ".format(file_out) + "-enable-pipes " + "-enable-mltex " + r"{}".format(file_in)))
+    os.system(cmds)
+    process = subprocess.Popen([which("pdflatex").replace("EXE", "exe"), '-output-format=pdf' , r"-output-directory={}".format(file_out) , "-enable-pipes" , "-enable-mltex" , r"{}".format(file_in)])
+    process.wait()
+
 
 clear = os.system('cls')
 cwd = os.getcwd()
@@ -61,49 +71,49 @@ def close_window():
     root.destroy()
 
 
-def close_window3():
+def close_window2():
     global entry
     for i in range(0, chemnumsl[0], 1):
-        entry3 = str(entries[i].get())
-        chemnamesl.append(entry3)
-    root3.destroy()
+        entry2 = str(entries[i].get())
+        chemnamesl.append(entry2)
+    root2.destroy()
 
 
-def close_window4():
+def close_window3():
     global entry
     for i in range(0, rxnsvl[0], 1):
-        entry4a = int(entriesr[i].get())
-        reactants_num.append(entry4a)
-        entry4b = int(entriesp[i].get())
-        products_num.append(entry4b)
-        entry4c = int(intvars[i].get())
+        entry3a = int(entriesr[i].get())
+        reactants_num.append(entry3a)
+        entry3b = int(entriesp[i].get())
+        products_num.append(entry3b)
+        entry3c = int(intvars[i].get())
         entryk = float(entriesk[i].get())
         kk.append(entryk)
         entryea = float(entriesea[i].get())
         eaf.append(entryea)
-        reverse.append(entry4c)
-    root4.destroy()
+        reverse.append(entry3c)
+    root3.destroy()
 
 
-def close_window5():
+def close_window4():
     global entry
     num_chems = int(len(chemnamesl))
     for i in range(0, rxnsvl[0], 1):
         cfsr = [0*ij for ij in range(0, num_chems, 1)]
         cfsp = [0*ik for ik in range(0, num_chems, 1)]
         for j in range(0, reactants_num[i], 1):
-            entry5r = entriesrc[i][j].get()
-            indexr = chemnamesl.index(entry5r)
-            cfsr[indexr] = int(entriesr5[i][j].get())
+            entry4r = entriesrc[i][j].get()
+            indexr = chemnamesl.index(entry4r)
+            cfsr[indexr] = int(entriesr4[i][j].get())
         coeffsr.append(cfsr[:])
         cfsr.clear()
         for k in range(0, products_num[i], 1):
-            entry5p = entriespc[i][k].get()
-            indexp = chemnamesl.index(entry5p)
-            cfsp[indexp] = int(entriesp5[i][k].get())
+            entry4p = entriespc[i][k].get()
+            indexp = chemnamesl.index(entry4p)
+            cfsp[indexp] = int(entriesp4[i][k].get())
         coeffsp.append(cfsp[:])
         cfsp.clear()
-    root5.destroy()
+    root4.destroy()
 
 
 root = Tk()
@@ -139,29 +149,31 @@ chems_value = chemnumsl[0]
 
 rxnnum = int(rxnsvl[0])
 rxnnumr = [int(i + 1) for i in range(rxnnum)]
-root3 = Tk()
-root3.title("Name of chemical species")
-mainframe3 = ttk.Frame(root3, padding="3 3 12 12")
-mainframe3.grid(column=0, row=0, sticky=(N, W, E, S))
-root3.columnconfigure(0, weight=1)
-root3.rowconfigure(0, weight=1)
+
+root2 = Tk()
+root2.title("Name of chemical species")
+mainframe2 = ttk.Frame(root2, padding="3 3 12 12")
+mainframe2.grid(column=0, row=0, sticky=(N, W, E, S))
+root2.columnconfigure(0, weight=1)
+root2.rowconfigure(0, weight=1)
 stringvars = []
 entries = []
 for i in range(0, chems_value, 1):
     stringvars.append(StringVar())
 for i in range(0, chems_value, 1):
-    entries.append(Entry(mainframe3, width=20, textvariable=stringvars[i]))
+    entries.append(Entry(mainframe2, width=20, textvariable=stringvars[i]))
     entries[i].grid(column=2, row=int(i + 1), sticky=(W, N, E, S))
-    Label(mainframe3, text="Enter name of chemical species {} ".format(i + 1)).grid(column=1, row=int(i + 1), sticky=(W, N, E, S))
-B3 = Button(root3, text="OK", command=close_window3).grid(column=3, row=1)
-root3.mainloop()
-root4 = Tk()
-root4.title("Reactants & Products")
-mainframe4 = ttk.Frame(root4, padding="3 3 12 12")
+    Label(mainframe2, text="Enter name of chemical species {} ".format(i + 1)).grid(column=1, row=int(i + 1), sticky=(W, N, E, S))
+B3 = Button(root2, text="OK", command=close_window2).grid(column=3, row=1)
+root2.mainloop()
+
+root3 = Tk()
+root3.title("Reactants & Products")
+mainframe4 = ttk.Frame(root3, padding="3 3 12 12")
 mainframe4.grid(column=0, row=0, sticky=(N, W, E))
-root4.columnconfigure(0, weight=1)
-root4.rowconfigure(0, weight=1)
-root4.rowconfigure(1, weight=1)
+root3.columnconfigure(0, weight=1)
+root3.rowconfigure(0, weight=1)
+root3.rowconfigure(1, weight=1)
 stringvarsr = []
 stringvarsp = []
 stringvarsk = []
@@ -223,24 +235,24 @@ for i in rxnnumr:
         Label(mainframe4, text='Ea{}{} [kJ/mol]'.format(chr(0x2080 + int(str(i)[0])), chr(0x2080 + int(str(i)[-1])))).grid(column=coli7, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
     elif len(str(i)) == 1:
         Label(mainframe4, text='Ea{} [kJ/mol]'.format(chr(0x2080 + int(str(i)[0])))).grid(column=coli7, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
-    entriesc.append(Checkbutton(mainframe4, text="Reversable", variable=intvars[i - 1]).grid(column=coli9, row=i, columnspan=2, sticky=(W, N, E, S)))
-B4 = Button(root4, text="OK", command=close_window4).grid(column=coli9, row=1, padx=Pad_x, pady=Pad_y)
-root4.mainloop()
+    entriesc.append(Checkbutton(mainframe4, text="Reaction {} Reversable".format(i), variable=intvars[i - 1]).grid(column=coli9, row=i, columnspan=2, sticky=(W, N, E, S)))
+B4 = Button(root3, text="OK", command=close_window3).grid(column=coli9, row=1, padx=Pad_x, pady=Pad_y)
+root3.mainloop()
 
-root5 = Tk()
-root5.title("Reactions")
-mainframe5 = ttk.Frame(root5, padding="3 3 12 12")
-mainframe5.grid(column=0, row=0, sticky=(N, W, E, S))
-root5.columnconfigure(0, weight=1)
-root5.rowconfigure(0, weight=1)
-stringvarsr5 = []
-stringvarsp5 = []
+root4 = Tk()
+root4.title("Reactions")
+mainframe4 = ttk.Frame(root4, padding="3 3 12 12")
+mainframe4.grid(column=0, row=0, sticky=(N, W, E, S))
+root4.columnconfigure(0, weight=1)
+root4.rowconfigure(0, weight=1)
+stringvarsr4 = []
+stringvarsp4 = []
 stringvarsrc = []
 stringvarspc = []
-entriesr5a = []
-entriesp5a = []
-entriesr5 = []
-entriesp5 = []
+entriesr4a = []
+entriesp4a = []
+entriesr4 = []
+entriesp4 = []
 entriesrca = []
 entriespca = []
 entriesrc = []
@@ -251,17 +263,17 @@ num_chems = len(chemnamesl)
 for i in range(0, rxnnum, 1):
     rval = reverse[i]
     if rval == 0:
-        rstrings.append(str(' --> '))
+        rstrings.append(u"\u2192")
     elif rval == 1:
-        rstrings.append(str(' <==> '))
+        rstrings.append(u"\u21CB")
 for i in range(0, rxnnum, 1):
-    stringvarsr5.append([StringVar(value="1") for i in range(0, reactants_num[i], 1)])
-    stringvarsp5.append([StringVar(value="1") for i in range(0, products_num[i], 1)])
+    stringvarsr4.append([StringVar(value="1") for i in range(0, reactants_num[i], 1)])
+    stringvarsp4.append([StringVar(value="1") for i in range(0, products_num[i], 1)])
     stringvarsrc.append([StringVar(value="1") for i in range(0, reactants_num[i], 1)])
     stringvarspc.append([StringVar(value="1") for i in range(0, products_num[i], 1)])
 
 for i in range(0, rxnnum, 1):
-    mainframe5.rowconfigure(i + 1, weight=1)
+    mainframe4.rowconfigure(i + 1, weight=1)
     rangeval = int(reactants_num[i])
     rangep = int(products_num[i])
     rval2 = int(reactants_num[i])*2 + 1
@@ -269,56 +281,56 @@ for i in range(0, rxnnum, 1):
     int2 = 2
     jval = 1
     for j in range(0, reactants_num[i], 1):
-        mainframe5.columnconfigure(jval, weight=1)
-        entriesr5a.append(Entry(mainframe5, width=7, textvariable=stringvarsr5[i][j]))
-        entriesr5a[-1].grid(column=jval, row=int(i + 1))
+        mainframe4.columnconfigure(jval, weight=1)
+        entriesr4a.append(Entry(mainframe4, width=7, textvariable=stringvarsr4[i][j]))
+        entriesr4a[-1].grid(column=jval, row=int(i + 1))
         jval += 1
-        mainframe5.columnconfigure(jval, weight=1)
-        combbo = Combobox(mainframe5, values=chemnamesl)
+        mainframe4.columnconfigure(jval, weight=1)
+        combbo = Combobox(mainframe4, values=chemnamesl)
         combbo.grid(column=jval, row=int(i + 1))
         jval += 1
-        mainframe5.columnconfigure(jval, weight=1)
+        mainframe4.columnconfigure(jval, weight=1)
         entriesrca.append(combbo)
         if j < reactants_num[i]-1:
-            mainframe5.columnconfigure(jval, weight=1)
-            Label(mainframe5, text=" + ").grid(column=jval, row=int(i + 1))
+            mainframe4.columnconfigure(jval, weight=1)
+            Label(mainframe4, text=" + ").grid(column=jval, row=int(i + 1))
             jval += 1
         elif j == reactants_num[i]-1:
-            mainframe5.columnconfigure(jval, weight=1)
-            Label(mainframe5, text=" {} ".format(rstrings[i])).grid(column=jval, row=int(i + 1))
+            mainframe4.columnconfigure(jval, weight=1)
+            Label(mainframe4, text=" {} ".format(rstrings[i])).grid(column=jval, row=int(i + 1))
             jval += 1
         int1 += 1
         int2 += 1
     endp = rval2 + products_num[i]+1
-    entriesr5.append(entriesr5a[:])
-    entriesr5a.clear()
+    entriesr4.append(entriesr4a[:])
+    entriesr4a.clear()
     entriesrc.append(entriesrca[:])
     entriesrca.clear()
     for k in range(0, products_num[i], 1):
         int1b = 1
         int2b = 2
-        mainframe5.columnconfigure(jval, weight=1)
-        entriesp5a.append(Entry(mainframe5, width=7, textvariable=stringvarsp5[i][k]))
-        entriesp5a[-1].grid(column=jval, row=int(i + 1))
+        mainframe4.columnconfigure(jval, weight=1)
+        entriesp4a.append(Entry(mainframe4, width=7, textvariable=stringvarsp4[i][k]))
+        entriesp4a[-1].grid(column=jval, row=int(i + 1))
         jval += 1
-        mainframe5.columnconfigure(jval, weight=1)
-        combbb = Combobox(mainframe5, values=chemnamesl)
+        mainframe4.columnconfigure(jval, weight=1)
+        combbb = Combobox(mainframe4, values=chemnamesl)
         combbb.grid(column=jval, row=int(i + 1))
         jval += 1
-        mainframe5.columnconfigure(jval, weight=1)
+        mainframe4.columnconfigure(jval, weight=1)
         entriespca.append(combbb)
         if k < products_num[i]-1:
-            Label(mainframe5, text=" + ").grid(column=jval, row=int(i + 1))
+            Label(mainframe4, text=" + ").grid(column=jval, row=int(i + 1))
             jval += 1
-            mainframe5.columnconfigure(jval, weight=1)
+            mainframe4.columnconfigure(jval, weight=1)
         else:
-            mainframe5.rowconfigure(int(rxnnum) + 2, weight=1)
-            passB5 = Button(root5, text="OK", command=close_window5).grid(column=2, row=int(rxnnum+2))
-    entriesp5.append(entriesp5a[:])
-    entriesp5a.clear()
+            mainframe4.rowconfigure(int(rxnnum) + 2, weight=1)
+            passB5 = Button(root4, text="OK", command=close_window4).grid(column=2, row=int(rxnnum+2))
+    entriesp4.append(entriesp4a[:])
+    entriesp4a.clear()
     entriespc.append(entriespca[:])
     entriespca.clear()
-root5.mainloop()
+root4.mainloop()
 
 rxns_strs = ["Reaction {}".format(int(i + 1)) for i in range(0, rxnnum, 1)]
 
@@ -483,8 +495,11 @@ class symbolgen:
             Pvals = list(Products.values())
             Ks = symbols('k_{}'.format(i + 1))
             Eas = symbols('Ea_{}'.format(i + 1))
-            # ee = exp(Mul(Eas, Pow(Mul(Symbol('R'), Symbol('T')), Integer(-1))))
-            ee = exp(Mul(Mul(Eas, Pow(Mul(Symbol('R'), Symbol('T')), Integer(-1))), Integer(-1)))
+            RT = Mul(Symbol('R'), Symbol('T'))
+            RTI = Pow(RT, Integer(-1))
+            EART = Mul(Eas, RTI)
+            EARTI = Mul(EART, Integer(-1))
+            ee = exp(EARTI)
             rterms = []
             pterms = []
             rtotal = Integer(1)
@@ -538,7 +553,7 @@ class symbolgen:
         for i in range(len(latexs)):
             dd = '{d' + 'C_{}'.format(symbols(lnames[i])) + '}'
             dt = '{d' + '{}'.format(symbols(indvar)) + '}'
-            dde = r'$\dfrac{}{}'.format(dd, dt) + ' = ' + '{}$'.format(latexs[i])
+            dde = r'${}\frac{}{}{}'.format(r"\mathbf{", dd, dt, "}") + ' = ' + '{}$'.format(latexs[i])
             ddg = Latex(dde)
             Latexs.append(dde)
             Displays.append(ddg)
@@ -596,11 +611,13 @@ class symbolgen:
     def jacobian(rhs, y):
         eqnl = len(rhs)
         cl = len(y)
+
         def mfunc(i, j):
             return diff(rhs[i], y[j])
         J = [[i for i in range(cl)] for j in range(eqnl)]
         Jf = [[sp.diff(rhs[j], y[i]) for i in range(cl)] for j in range(eqnl)]
         Jn = [[i for i in range(cl)] for j in range(eqnl)]
+        Jm = [[i for i in range(cl)] for j in range(eqnl)]
         ix, jx = symbols("ix jx")
         Ja = Matrix(len(rhs), len(y), lambda i, j: mfunc(i, j))
         for i in range(eqnl):
@@ -609,10 +626,11 @@ class symbolgen:
         for i in range(eqnl):
             for j in range(cl):
                 Jn[i][j] = str('{}'.format('{}'.format(mfunc(i, j)).replace('*exp', '*np.exp')))
+                Jm[i][j] = str('{}'.format('{}'.format(mfunc(i, j)).replace('*exp', '*math.exp')))
         MatrixJ = simplify(Matrix(Ja))
         LatexMatrix = sp.latex(matrix2numpy(Matrix(Jf)))
         lm = latex(MatrixJ, mode='inline', itex=True, mat_delim="(", mat_str='array')
-        return J, Jn, MatrixJ, lm, LatexMatrix
+        return J, Jn, Jm, MatrixJ, lm, LatexMatrix
 
     def sysgen(self):
         equations, latexs = self.eqlist(self.Eqlist, self.reactants, self.products)
@@ -642,18 +660,18 @@ class symbolgen:
         equats, latexss = symbolgen.eqlist(eqs, reacts, prods)
         slat, dlat = symbolgen.dislat(names, latexss, intz)
         Chem, ChemD, ChemW = symbolgen.chemeq(Cs, rxn, inits)
+        Cs.append("T")
         RHS, RHSf = symbolgen.rhseqs(equats, kk, ea, r)
-        Jac, JacN, Jacm, lm, latexmatrix = symbolgen.jacobian(RHSf, Cs)
-        JacS, JacSN, JacSm, lmS, latexmatrixS = symbolgen.jacobian(RHS, Cs)
+        Jac, JacNumpy, JacMath, JacSimple, lm, latexmatrix = symbolgen.jacobian(RHSf, Cs)
+        JacS, JacNumpyS, JacMathS, JacSimpleS, lmS, latexmatrixS = symbolgen.jacobian(RHS, Cs)
         symbolgen.csave(Chem, filepathf)
         symbolgen.psave(names, dlat, filepathf)
-        Cs.append("T")
         KS = [str(r"{}".format(Ks[i])) for i in range(len(Ks))]
         EAS = [str(r"{}".format(EAs[i])) for i in range(len(EAs))]
         EAK = KS.copy()
         EAK.extend(EAS)
-        symbolgen.fsave(filepathf, equats, dlat, Chem, ChemW, RHS, RHSf, Jac, JacN, Jacm, lm, latexmatrix, JacS, JacSN, JacSm, lmS, latexmatrixS, Cs, EAK)
-        return Cs, Ks, EAs, reacts, prods, equats, slat, dlat, Chem, ChemD, ChemW, RHS, RHSf, Jac, JacN, Jacm, lm, latexmatrix, JacS, JacSN, JacSm, lmS, latexmatrixS
+        symbolgen.fsave(filepathf, equats, dlat, Chem, ChemW, RHS, RHSf, Jac, JacNumpy, JacMath, JacSimple, lm, latexmatrix, JacS, JacNumpyS, JacMathS, JacSimpleS, lmS, latexmatrixS, Cs, EAK, names)
+        return Cs, Ks, EAs, reacts, prods, equats, slat, dlat, Chem, ChemD, ChemW, RHS, RHSf, Jac, JacNumpy, JacMath, JacSimple, lm, latexmatrix, JacS, JacNumpyS, JacMathS, JacSimpleS, lmS, latexmatrixS
 
     def psave(nameslist, LATEXD, fpath):
         filename = fpath
@@ -668,6 +686,8 @@ class symbolgen:
             ax.text(0.5 * (left + right), 0.5 * (bottom + top), k, va='center', ha='center', bbox=dict(boxstyle="round", fc="white", alpha=0.3, ec="black", pad=0.2))
             fig.savefig(r'{}\{}.svg'.format(filename, nameslist[s]), bbox_inches='tight')
             fig.savefig(r'{}\{}.pdf'.format(filename, nameslist[s]), bbox_inches='tight')
+            fig.savefig(r'{}\{}.png'.format(filename, nameslist[s]), bbox_inches='tight')
+            plt.close()
 
     def csave(LATEXC, fpath):
         filename = fpath
@@ -682,8 +702,10 @@ class symbolgen:
             ax.text(0.5*(left+right), 0.5*(bottom+top), k, va='center', ha='center', bbox=dict(boxstyle="round", fc="white", alpha=0.3, ec="black", pad=0.2))
             fig.savefig(r'{}\Reaction {}.svg'.format(filename, s + 1), bbox_inches='tight')
             fig.savefig(r'{}\Reaction {}.pdf'.format(filename, s + 1), bbox_inches='tight')
+            fig.savefig(r'{}\Reaction {}.png'.format(filename, s + 1), bbox_inches='tight')
+            plt.close()
 
-    def fsave(ffpath, eqns, eqnslat, crxns, crxnsw, rhseq, rhseqf, Jac, JacN, JacM, lm, latexmatrix, JacS, JacSN, JacSm, lmS, latexmatrixS, C, EAK):
+    def fsave(ffpath, eqns, eqnslat, crxns, crxnsw, rhseq, rhseqf, Jac, JacN, JacMath, JacSimple, lm, latexmatrix, JacSy, JacSyN, JacMathSy, JacSimpleSy, lmSy, latexmatrixSy, C, EAK, nameslist):
         with open(r"{}\Equations.txt".format(ffpath), "w") as output:
             output.write("[")
             el = len(eqns)
@@ -698,6 +720,34 @@ class symbolgen:
         with open(r"{}\EquationsLatex.txt".format(ffpath), "w") as output:
             for eqnlat in eqnslat:
                 output.write('{}\n'.format(str(eqnlat)))
+
+        with open(r"{}\EquationsTex.tex".format(ffpath), "w") as output:
+            removetable = str.maketrans('', '', "$")
+            output.write(r"\documentclass{article}")
+            output.write("\n")
+            output.write(r"\usepackage{amsmath, nccmath, bm}")
+            output.write("\n")
+            output.write(r"\usepackage[bottom=0.2in,top=0.2in,left=0.2in,right=0.2in]{geometry}")
+            output.write("\n")
+            output.write(r"\begin{document}")
+            output.write("\n")
+            output.write(r"\begin{fleqn}")
+            output.write("\n")
+            for eqnlat in eqnslat:
+                output.write(r"\begin{equation}")
+                output.write("\n")
+                output.write(r"\begin{split}")
+                output.write("\n")
+                output.write('{}\n'.format(str(eqnlat).translate(removetable)))
+                output.write(r"\end{split}")
+                output.write("\n")
+                output.write(r"\end{equation}")
+                output.write("\n")
+                output.write(r"\\")
+                output.write("\n")
+            output.write(r"\end{fleqn}")
+            output.write("\n")
+            output.write(r"\end{document}")
 
         with open(r"{}\ReactionsLatex.txt".format(ffpath), "w") as output:
             for crxn in crxns:
@@ -718,11 +768,11 @@ class symbolgen:
             for rhs in rhseq:
                 lr = rhseq.index(rhs)
                 if lr < ll:
-                    eqsss.append(str("EQ{}".format(rhseq.index(rhs))))
-                    output.write("    EQ{} = {}\n".format(rhseq.index(rhs), rhs))
+                    eqsss.append(str("EQ_{}".format(nameslist[rhseq.index(rhs)])))
+                    output.write("    EQ_{} = {}\n".format(nameslist[rhseq.index(rhs)], rhs))
                 elif lr >= ll:
-                    eqsss.append(str("EQ{}".format(rhseq.index(rhs))))
-                    output.write("    EQ{} = {}\n".format(rhseq.index(rhs), rhs))
+                    eqsss.append(str("EQ_{}".format(nameslist[rhseq.index(rhs)])))
+                    output.write("    EQ_{} = {}\n".format(nameslist[rhseq.index(rhs)], rhs))
             output.write("    return [{}]".format(("{}".format(eqsss)).translate(removetableB)))
 
         with open(r"{}\RHS.txt".format(ffpath), "w") as output:
@@ -737,11 +787,11 @@ class symbolgen:
             for rhsff in rhseqf:
                 lr += 1
                 if lr < ll:
-                    eqsss.append(str("EQ{}".format(rhseqf.index(rhsff))))
-                    output.write("    EQ{} = {}\n".format(rhseqf.index(rhsff), rhsff))
+                    eqsss.append(str("EQ_{}".format(nameslist[rhseqf.index(rhsff)])))
+                    output.write("    EQ_{} = {}\n".format(nameslist[rhseqf.index(rhsff)], rhsff))
                 elif lr >= ll:
-                    eqsss.append(str("EQ{}".format(rhseqf.index(rhsff))))
-                    output.write("    EQ{} = {}\n".format(rhseqf.index(rhsff), rhsff))
+                    eqsss.append(str("EQ_{}".format(nameslist[rhseqf.index(rhsff)])))
+                    output.write("    EQ_{} = {}\n".format(nameslist[rhseqf.index(rhsff)], rhsff))
             output.write("    return [{}]".format(("{}".format(eqsss)).translate(removetableB)))
 
         with open(r"{}\Jacobian.txt".format(ffpath), "w") as output:
@@ -751,11 +801,32 @@ class symbolgen:
             output.write("    {} = args\n".format(str("{}".format(EAK)).translate(removetable)))
             output.write("    {} = y\n".format(str("{}".format(C)).translate(removetable)))
             output.write("    Jac = [")
-            jj = len(Jac)
+            jj = len(JacMathSy)
             jjj = 0
-            for i in range(len(Jac)):
+            for i in range(len(JacMathSy)):
                 jjj += 1
-                Jrow = Jac[i][:]
+                Jrow = JacMathSy[i][:]
+                if i == 0:
+                    output.write(('{},\n'.format(Jrow)).replace("'", ""))
+                if jjj < jj and i != 0:
+                    output.write(('           {},\n'.format(Jrow)).replace("'", ""))
+                elif jjj >= jj:
+                    output.write(('           {}'.format(Jrow)).replace("'", ""))
+            output.write("]\n")
+            output.write("    return Jac")
+
+        with open(r"{}\JacobianSympy.txt".format(ffpath), "w") as output:
+            removetable = str.maketrans('', '', "[]'")
+            removetableB = str.maketrans('', '', "[]'")
+            output.write("def Jacob(t, y, *args):\n")
+            output.write("    {} = args\n".format(str("{}".format(EAK)).translate(removetable)))
+            output.write("    {} = y\n".format(str("{}".format(C)).translate(removetable)))
+            output.write("    Jac = [")
+            jj = len(JacSy)
+            jjj = 0
+            for i in range(len(JacSy)):
+                jjj += 1
+                Jrow = JacSy[i][:]
                 if i == 0:
                     output.write(('{},\n'.format(Jrow)).replace("'", ""))
                 if jjj < jj and i != 0:
@@ -786,13 +857,13 @@ class symbolgen:
             output.write("]\n")
             output.write("    return Jac")
 
-        with open("{}\JacobianMatrix.txt".format(ffpath), 'w') as output:
-            output.write('{}'.format(JacM))
+        with open(r"{}\JacobianMatrix.txt".format(ffpath), 'w') as output:
+            output.write('{}'.format(JacSimple))
 
         with open(r"{}\JacobianLatex.txt".format(ffpath), "w") as output:
             output.write('{}'.format(lm))
 
-        with open("{}\RHS.txt".format(ffpath)) as filein, open("{}\RightHandSide.txt".format(ffpath), 'w') as fileout:
+        with open(r"{}\RHS.txt".format(ffpath)) as filein, open(r"{}\RightHandSide.txt".format(ffpath), 'w') as fileout:
             fileinl = filein.readlines()
             lfia = len(fileinl)
             lffb = 0
@@ -805,22 +876,22 @@ class symbolgen:
                 elif lffb >= lfia:
                     fileout.write('{}'.format(line))
 
-        with open("{}\RHSsymbols.txt".format(ffpath)) as filein, open("{}\RightHandSideSymbols.txt".format(ffpath), 'w') as fileout:
+        with open(r"{}\RHSsymbols.txt".format(ffpath)) as filein, open(r"{}\RightHandSideSymbols.txt".format(ffpath), 'w') as fileout:
             fileinl = filein.readlines()
             lfi = len(fileinl)
             lff = 0
             for line in fileinl:
                 line = line.replace("'", "")
-                line = line.replace("exp", "sp.exp")
+                line = line.replace("exp", "math.exp")
                 lff += 1
                 if lff < lfi:
                     fileout.write('{}'.format(line))
                 elif lff >= lfi:
                     fileout.write('{}'.format(line))
 
-        pickle.dumps(JacM)
-        with open('{}\JacobianMatrixPickle.txt'.format(ffpath), 'wb') as f:
-            pickle.dump(JacM, f)
+        pickle.dumps(JacSimple)
+        with open(r'{}\JacobianMatrixPickle.txt'.format(ffpath), 'wb') as f:
+            pickle.dump(JacSimple, f)
 
         with open(r"{}\JacobianSymbolic.txt".format(ffpath), "w") as output:
             removetable = str.maketrans('', '', "[]'")
@@ -829,11 +900,32 @@ class symbolgen:
             output.write("    {} = args\n".format(str("{}".format(EAK)).translate(removetable)))
             output.write("    {} = y\n".format(str("{}".format(C)).translate(removetable)))
             output.write("    Jac = [")
-            jj = len(JacS)
+            jj = len(JacMathSy)
             jjj = 0
-            for i in range(len(JacS)):
+            for i in range(len(JacMathSy)):
                 jjj += 1
-                Jrow = JacS[i][:]
+                Jrow = JacMathSy[i][:]
+                if i == 0:
+                    output.write(('{},\n'.format(Jrow)).replace("'", ""))
+                if jjj < jj and i != 0:
+                    output.write(('           {},\n'.format(Jrow)).replace("'", ""))
+                elif jjj >= jj:
+                    output.write(('           {}'.format(Jrow)).replace("'", ""))
+            output.write("]\n")
+            output.write("    return Jac")
+
+        with open(r"{}\JacobianSymbolicSympy.txt".format(ffpath), "w") as output:
+            removetable = str.maketrans('', '', "[]'")
+            removetableB = str.maketrans('', '', "[]'")
+            output.write("def Jacob(t, y, *args):\n")
+            output.write("    {} = args\n".format(str("{}".format(EAK)).translate(removetable)))
+            output.write("    {} = y\n".format(str("{}".format(C)).translate(removetable)))
+            output.write("    Jac = [")
+            jj = len(JacSy)
+            jjj = 0
+            for i in range(len(JacSy)):
+                jjj += 1
+                Jrow = JacSy[i][:]
                 if i == 0:
                     output.write(('{},\n'.format(Jrow)).replace("'", ""))
                 if jjj < jj and i != 0:
@@ -850,11 +942,11 @@ class symbolgen:
             output.write("    {} = args\n".format(str("{}".format(EAK)).translate(removetable)))
             output.write("    {} = y\n".format(str("{}".format(C)).translate(removetable)))
             output.write("    Jac = [")
-            jj = len(JacS)
+            jj = len(JacSy)
             jjj = 0
-            for i in range(len(JacSN)):
+            for i in range(len(JacSyN)):
                 jjj += 1
-                Jrow = JacSN[i][:]
+                Jrow = JacSyN[i][:]
                 if i == 0:
                     output.write(('{},\n'.format(Jrow)).replace("'", ""))
                 if jjj < jj and i != 0:
@@ -864,20 +956,26 @@ class symbolgen:
             output.write("]\n")
             output.write("    return Jac")
 
-        with open("{}\JacobianMatrixSymbolic.txt".format(ffpath), 'w') as output:
-            output.write('{}'.format(JacSm))
+        with open(r"{}\JacobianMatrixSymbolic.txt".format(ffpath), 'w') as output:
+            output.write('{}'.format(JacSimpleSy))
 
         with open(r"{}\JacobianLatexSymbolic.txt".format(ffpath), "w") as output:
-            output.write('{}'.format(lmS))
+            output.write('{}'.format(lmSy))
 
-        pickle.dumps(JacSm)
-        with open('{}\JacobianMatrixPickleSymbolic.txt'.format(ffpath), 'wb') as f:
-            pickle.dump(JacSm, f)
+        pickle.dumps(JacSimpleSy)
+        with open(r'{}\JacobianMatrixPickleSymbolic.txt'.format(ffpath), 'wb') as f:
+            pickle.dump(JacSimpleSy, f)
+
+        try:
+            create_pdf(r"{}\EquationsTex.tex".format(ffpath), "{}".format(ffpath))
+        except Exception:
+            print("Coulnd't convert tex file.")
+            pass
 
 
 ea = [i*1000.0 for i in eaf]
 RRv = RR[0]
 rxnnumf = rxnsvl[0]
-C, KKS, EAS, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacn, jacM, lm, latexmatrix, jacs, jacsn, jacsM, lms, latexmatrixs = symbolgen.fullgen(chemnamesl, rxnnumf, Initreactions, Eqlist, indvdf[0], ffpath[0], kk, ea, RRv)
+C, KKS, EAS, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacnumpy, Jacmath, JacSimple, lm, latexmatrix, jacsy, jacnumpysy, jacmathsy, jacsimplesy, lmsy, latexmatrixsy = symbolgen.fullgen(chemnamesl, rxnnumf, Initreactions, Eqlist, indvdf[0], ffpath[0], kk, ea, RRv)
 # print(rhs)
 # print(rhsf)
