@@ -30,3 +30,14 @@ The right hand side (**RHS**) of the system of equations will be generated both 
 
 The **Jacobian matrix** is symbolically generated in order to improve the accuracy and speed of the solvers used in the aforementioned method.
 * [Symbolic Generator](https://github.com/tjczec01/symbolgen/blob/master/symbolgen.ipynb)
+
+# 5. Use
+
+# 5.1 Generate all necessary lists and values as follows.
+
+```chemnamesl, rxnsvl, Initreactions, Eqlist, indvdf, ffpath, kk, eaf, RR = guivar.fullgui()```
+
+# 5.2 Calculate the jacobian and all other desired functions as follows.
+
+```C, KKS, EAS, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacnumpy, Jacmath, JacSimple, lm, latexmatrix, jacsy, jacnumpysy, jacmathsy, jacsimplesy, lmsy, latexmatrixsy = symbolgen.fullgen(chemnamesl, rxnsvl, Initreactions, Eqlist, indvdf, ffpath, kk, kJtoJ(eaf), RR)```
+
