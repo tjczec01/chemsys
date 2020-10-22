@@ -6,6 +6,10 @@ Generator for symbolic functions for both full and simple systems
 
 **chemsys.py** is a Gui based chemical reaction system generator that generates the right hand side (**RHS**) of a chemical system to be used with the [solve_ivp](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html) and [odeint](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html#scipy.integrate.odeint)  method, the **jacobian**, and the overall equations for each reactions and each individual chemical species. It will generate **Latex** formatted equations for the individual chemical reactions, overall mass balances for each species, and both symbolic and numerical text files for the **RHS** and **jacobian**.
 
+# Installation 
+##  `pip install chemsys` 
+
+
 # 1. Chemical reactions
 
 This program will generate the **Latex** forms of each individual reaction and then save them as both a **pdf** and **svg**. The string forms of the equations will be saved in a **text** (txt) file. An example of some inital reactions are given below.
