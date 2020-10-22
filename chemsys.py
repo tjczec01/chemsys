@@ -21,14 +21,6 @@ import os
 import subprocess
 from shutil import which
 
-def create_pdf(file_in, file_out):
-    # print(which("pdflatex").replace("EXE", "exe") + ' -output-format=pdf ' + r"-output-directory={} ".format(file_out) + "-enable-pipes " + "-enable-mltex " + r"{}".format(file_in))
-    cmds = str('"{}"'.format(which("pdflatex").replace("EXE", "exe") + ' -output-format=pdf ' + r"-output-directory={} ".format(file_out) + "-enable-pipes " + "-enable-mltex " + r"{}".format(file_in)))
-    os.system(cmds)
-    process = subprocess.Popen([which("pdflatex").replace("EXE", "exe"), '-output-format=pdf' , r"-output-directory={}".format(file_out) , "-enable-pipes" , "-enable-mltex" , r"{}".format(file_in)])
-    process.wait()
-
-
 clear = os.system('cls')
 cwd = os.getcwd()
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -39,326 +31,487 @@ try:
 except Exception:
     pass
 
-chemnumsl = []
-rxnsvl = []
-chemnamesl = []
-reactants_num = []
-products_num = []
-reverse = []
-coeffsr = []
-coeffsp = []
-Initreactions = []
-Eqlist = []
-indvdf = []
-ffpath = []
-kk = []
-eaf = []
-RR = []
+
+def create_pdf(file_in, file_out):
+    cmds = str('"{}"'.format(which("pdflatex").replace("EXE", "exe") + ' -output-format=pdf ' + r"-output-directory={} ".format(file_out) + "-enable-pipes " + "-enable-mltex " + r"{}".format(file_in)))
+    os.system(cmds)
+    process = subprocess.Popen([which("pdflatex").replace("EXE", "exe"), '-output-format=pdf', r"-output-directory={}".format(file_out), "-enable-pipes", "-enable-mltex", r"{}".format(file_in)])
+    process.wait()
 
 
-def close_window():
-    global entry
-    entry = int(chems.get())
-    chemnumsl.append(entry)
-    entry2 = int(rxns.get())
-    rxnsvl.append(entry2)
-    entry3 = str(indvard.get())
-    indvdf.append(r'{}'.format(entry3))
-    entry4 = str(r'{}'.format(filev.get()))
-    ffpath.append(entry4)
-    rval = float(rg.get())
-    RR.append(rval)
-    root.destroy()
+def kJtoJ(EA_listkJ):
+    EA_listJ = [i*1000.0 for i in EA_listkJ]
+    return EA_listJ
 
 
-def close_window2():
-    global entry
-    for i in range(0, chemnumsl[0], 1):
-        entry2 = str(entries[i].get())
-        chemnamesl.append(entry2)
-    root2.destroy()
+class guivar():
 
+    def __init__(self):
+        self.chemnumsl = []
+        self.rxnsvl = []
+        self.chemnamesl = []
+        self.reactants_num = []
+        self.products_num = []
+        self.reverse = []
+        self.coeffsr = []
+        self.coeffsp = []
+        self.Initreactions = []
+        self.Eqlist = []
+        self.indvdf = []
+        self.ffpath = []
+        self.kk = []
+        self.eaf = []
+        self.RR = []
 
-def close_window3():
-    global entry
-    for i in range(0, rxnsvl[0], 1):
-        entry3a = int(entriesr[i].get())
-        reactants_num.append(entry3a)
-        entry3b = int(entriesp[i].get())
-        products_num.append(entry3b)
-        entry3c = int(intvars[i].get())
-        entryk = float(entriesk[i].get())
-        kk.append(entryk)
-        entryea = float(entriesea[i].get())
-        eaf.append(entryea)
-        reverse.append(entry3c)
-    root3.destroy()
+    def chemnumsll(self):
+        return self.chemnumsl
 
+    def rxnsvll(self):
+        return self.rxnsvl
 
-def close_window4():
-    global entry
-    num_chems = int(len(chemnamesl))
-    for i in range(0, rxnsvl[0], 1):
-        cfsr = [0*ij for ij in range(0, num_chems, 1)]
-        cfsp = [0*ik for ik in range(0, num_chems, 1)]
-        for j in range(0, reactants_num[i], 1):
-            entry4r = entriesrc[i][j].get()
-            indexr = chemnamesl.index(entry4r)
-            cfsr[indexr] = int(entriesr4[i][j].get())
-        coeffsr.append(cfsr[:])
-        cfsr.clear()
-        for k in range(0, products_num[i], 1):
-            entry4p = entriespc[i][k].get()
-            indexp = chemnamesl.index(entry4p)
-            cfsp[indexp] = int(entriesp4[i][k].get())
-        coeffsp.append(cfsp[:])
-        cfsp.clear()
-    root4.destroy()
+    def chemnamesll(self):
+        return self.chemnamesl
 
+    def reactants_numl(self):
+        return self.reactants_num
 
-root = Tk()
-root.title("Number of chemical species")
-mainframe = ttk.Frame(root, padding="3 3 12 12")
-mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-root.columnconfigure(0, weight=1)
-root.rowconfigure(0, weight=1)
-chemnums = StringVar()
-chems = Entry(mainframe, width=7, textvariable=chemnums)
-chems.grid(column=2, row=1, sticky=(W, N, E, S))
-Label(mainframe, text="Enter total number of chemical species ").grid(column=1, row=1, sticky=(W, N, E, S))
-rnums = StringVar()
-rxns = Entry(mainframe, width=7, textvariable=rnums)
-rxns.grid(column=2, row=2, sticky=(W, N, E, S))
-Label(mainframe, text="Enter total number of chemical reactions ").grid(column=1, row=2, sticky=(W, N, E, S))
-indvard = StringVar()
-inv = Entry(mainframe, width=7, textvariable=indvard)
-inv.grid(column=2, row=3, sticky=(W, N, E, S))
-Label(mainframe, text="Enter independent variable ").grid(column=1, row=3, sticky=(W, N, E, S))
-filep = StringVar(value=path_fol)
-filev = Entry(mainframe, width=50, textvariable=filep)
-filev.grid(column=2, row=4, sticky=(W, N, E, S))
-Label(mainframe, text="Enter file path ").grid(column=1, row=4, sticky=(W, N, E, S))
-rgas = StringVar(value="8.31446261815324")
-rg = Entry(mainframe, width=7, textvariable=rgas)
-rg.grid(column=2, row=5, sticky=(W, N, E, S))
-Label(mainframe, text="Enter Gas Constant ").grid(column=1, row=5, sticky=(W, N, E, S))
-B = Button(root, text="OK", command=close_window).grid(column=3, row=1)
-root.mainloop()
+    def products_numl(self):
+        return self.products_num
 
-chems_value = chemnumsl[0]
+    def reversel(self):
+        return self.reverse
 
-rxnnum = int(rxnsvl[0])
-rxnnumr = [int(i + 1) for i in range(rxnnum)]
+    def coeffsrl(self):
+        return self.coeffsr
 
-root2 = Tk()
-root2.title("Name of chemical species")
-mainframe2 = ttk.Frame(root2, padding="3 3 12 12")
-mainframe2.grid(column=0, row=0, sticky=(N, W, E, S))
-root2.columnconfigure(0, weight=1)
-root2.rowconfigure(0, weight=1)
-stringvars = []
-entries = []
-for i in range(0, chems_value, 1):
-    stringvars.append(StringVar())
-for i in range(0, chems_value, 1):
-    entries.append(Entry(mainframe2, width=20, textvariable=stringvars[i]))
-    entries[i].grid(column=2, row=int(i + 1), sticky=(W, N, E, S))
-    Label(mainframe2, text="Enter name of chemical species {} ".format(i + 1)).grid(column=1, row=int(i + 1), sticky=(W, N, E, S))
-B3 = Button(root2, text="OK", command=close_window2).grid(column=3, row=1)
-root2.mainloop()
+    def coeffspl(self):
+        return self.coeffsp
 
-root3 = Tk()
-root3.title("Reactants & Products")
-mainframe4 = ttk.Frame(root3, padding="3 3 12 12")
-mainframe4.grid(column=0, row=0, sticky=(N, W, E))
-root3.columnconfigure(0, weight=1)
-root3.rowconfigure(0, weight=1)
-root3.rowconfigure(1, weight=1)
-stringvarsr = []
-stringvarsp = []
-stringvarsk = []
-stringvarsea = []
-intvars = []
-entriesr = []
-entriesp = []
-entriesc = []
-entriesk = []
-entriesea = []
-for i in rxnnumr:
-    stringvarsr.append(StringVar())
-    stringvarsp.append(StringVar())
-    stringvarsk.append(StringVar())
-    stringvarsea.append(StringVar())
-    intvars.append(IntVar())
-for i in rxnnumr:
-    mainframe4.rowconfigure(i, weight=1)
-    coli0 = 0
-    coli1 = coli0 + 1
-    coli2 = coli1 + 1
-    coli3 = coli2 + 1
-    coli4 = coli3 + 1
-    coli5 = coli4 + 1
-    coli6 = coli5 + 1
-    coli7 = coli6 + 1
-    coli8 = coli7 + 1
-    coli9 = coli8 + 1
-    coli10 = coli9 + 1
-    clist = [i for i in range(coli10 + 1)]
-    for ci in clist:
-        mainframe4.columnconfigure(ci, weight=1)
-    Pad_x = 5
-    Pad_y = 2
-    CE = 2
-    group0 = Label(mainframe4, text="Reaction Number", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli0, columnspan=1, sticky=(W, N, E, S))
-    group1 = Label(mainframe4, text="Number of Reactants", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli1, columnspan=2, sticky=(W, N, E, S))
-    group2 = Label(mainframe4, text="Number of Products", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli3, columnspan=2, sticky=(W, N, E, S))
-    group3 = Label(mainframe4, text="Reaction Constant", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli5, columnspan=2, sticky=(W, N, E, S))
-    group4 = Label(mainframe4, text="Activation Energy", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli7, columnspan=2, sticky=(W, N, E, S))
-    Box_1 = Entry(mainframe4, width=7, textvariable=stringvarsr[i - 1])
-    Box_1.grid(column=coli1, row=i, columnspan=CE, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
-    Label_0 = Label(mainframe4, text="Reaction {} ".format(i), padx=Pad_x, pady=Pad_y)
-    Label_0.grid(column=coli0, row=i, sticky=(W, N, E, S))
-    Label_0.rowconfigure(int(i), weight=1)
-    Label_0.columnconfigure(coli0, weight=1)
-    entriesr.append(Box_1)
-    entriesp.append(Entry(mainframe4, width=7, textvariable=stringvarsp[i - 1]))
-    entriesp[i - 1].grid(column=coli3, row=i, columnspan=CE, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
-    entriesk.append(Entry(mainframe4, width=7, textvariable=stringvarsk[i - 1]))
-    entriesk[i - 1].grid(column=coli6, row=i, columnspan=1, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
-    if len(str(i)) >= 2:
-        Label(mainframe4, text='k{}{}'.format(chr(0x2080 + int(str(i)[0])), chr(0x2080 + int(str(i)[-1])))).grid(column=coli5, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
-    elif len(str(i)) == 1:
-        Label(mainframe4, text='k{}'.format(chr(0x2080 + int(str(i)[0])))).grid(column=coli5, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
-    entriesea.append(Entry(mainframe4, width=7, textvariable=stringvarsea[i - 1]))
-    entriesea[i - 1].grid(column=coli8, row=i, columnspan=1, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
-    if len(str(i)) >= 2:
-        Label(mainframe4, text='Ea{}{} [kJ/mol]'.format(chr(0x2080 + int(str(i)[0])), chr(0x2080 + int(str(i)[-1])))).grid(column=coli7, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
-    elif len(str(i)) == 1:
-        Label(mainframe4, text='Ea{} [kJ/mol]'.format(chr(0x2080 + int(str(i)[0])))).grid(column=coli7, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
-    entriesc.append(Checkbutton(mainframe4, text="Reaction {} Reversable".format(i), variable=intvars[i - 1]).grid(column=coli9, row=i, columnspan=2, sticky=(W, N, E, S)))
-B4 = Button(root3, text="OK", command=close_window3).grid(column=coli9, row=1, padx=Pad_x, pady=Pad_y)
-root3.mainloop()
+    def Initreactionsl(self):
+        return self.Initreactions
 
-root4 = Tk()
-root4.title("Reactions")
-mainframe4 = ttk.Frame(root4, padding="3 3 12 12")
-mainframe4.grid(column=0, row=0, sticky=(N, W, E, S))
-root4.columnconfigure(0, weight=1)
-root4.rowconfigure(0, weight=1)
-stringvarsr4 = []
-stringvarsp4 = []
-stringvarsrc = []
-stringvarspc = []
-entriesr4a = []
-entriesp4a = []
-entriesr4 = []
-entriesp4 = []
-entriesrca = []
-entriespca = []
-entriesrc = []
-entriespc = []
-rstrings = []
+    def Eqlistl(self):
+        return self.Eqlist
 
-num_chems = len(chemnamesl)
-for i in range(0, rxnnum, 1):
-    rval = reverse[i]
-    if rval == 0:
-        rstrings.append(u"\u2192")
-    elif rval == 1:
-        rstrings.append(u"\u21CB")
-for i in range(0, rxnnum, 1):
-    stringvarsr4.append([StringVar(value="1") for i in range(0, reactants_num[i], 1)])
-    stringvarsp4.append([StringVar(value="1") for i in range(0, products_num[i], 1)])
-    stringvarsrc.append([StringVar(value="1") for i in range(0, reactants_num[i], 1)])
-    stringvarspc.append([StringVar(value="1") for i in range(0, products_num[i], 1)])
+    def indvdfl(self):
+        return self.indvdf
 
-for i in range(0, rxnnum, 1):
-    mainframe4.rowconfigure(i + 1, weight=1)
-    rangeval = int(reactants_num[i])
-    rangep = int(products_num[i])
-    rval2 = int(reactants_num[i])*2 + 1
-    int1 = 1
-    int2 = 2
-    jval = 1
-    for j in range(0, reactants_num[i], 1):
-        mainframe4.columnconfigure(jval, weight=1)
-        entriesr4a.append(Entry(mainframe4, width=7, textvariable=stringvarsr4[i][j]))
-        entriesr4a[-1].grid(column=jval, row=int(i + 1))
-        jval += 1
-        mainframe4.columnconfigure(jval, weight=1)
-        combbo = Combobox(mainframe4, values=chemnamesl)
-        combbo.grid(column=jval, row=int(i + 1))
-        jval += 1
-        mainframe4.columnconfigure(jval, weight=1)
-        entriesrca.append(combbo)
-        if j < reactants_num[i]-1:
-            mainframe4.columnconfigure(jval, weight=1)
-            Label(mainframe4, text=" + ").grid(column=jval, row=int(i + 1))
-            jval += 1
-        elif j == reactants_num[i]-1:
-            mainframe4.columnconfigure(jval, weight=1)
-            Label(mainframe4, text=" {} ".format(rstrings[i])).grid(column=jval, row=int(i + 1))
-            jval += 1
-        int1 += 1
-        int2 += 1
-    endp = rval2 + products_num[i]+1
-    entriesr4.append(entriesr4a[:])
-    entriesr4a.clear()
-    entriesrc.append(entriesrca[:])
-    entriesrca.clear()
-    for k in range(0, products_num[i], 1):
-        int1b = 1
-        int2b = 2
-        mainframe4.columnconfigure(jval, weight=1)
-        entriesp4a.append(Entry(mainframe4, width=7, textvariable=stringvarsp4[i][k]))
-        entriesp4a[-1].grid(column=jval, row=int(i + 1))
-        jval += 1
-        mainframe4.columnconfigure(jval, weight=1)
-        combbb = Combobox(mainframe4, values=chemnamesl)
-        combbb.grid(column=jval, row=int(i + 1))
-        jval += 1
-        mainframe4.columnconfigure(jval, weight=1)
-        entriespca.append(combbb)
-        if k < products_num[i]-1:
-            Label(mainframe4, text=" + ").grid(column=jval, row=int(i + 1))
-            jval += 1
-            mainframe4.columnconfigure(jval, weight=1)
-        else:
-            mainframe4.rowconfigure(int(rxnnum) + 2, weight=1)
-            passB5 = Button(root4, text="OK", command=close_window4).grid(column=2, row=int(rxnnum+2))
-    entriesp4.append(entriesp4a[:])
-    entriesp4a.clear()
-    entriespc.append(entriespca[:])
-    entriespca.clear()
-root4.mainloop()
+    def ffpathl(self):
+        return self.ffpath
 
-rxns_strs = ["Reaction {}".format(int(i + 1)) for i in range(0, rxnnum, 1)]
+    def kkl(self):
+        return self.kk
 
-for i in range(0, rxnnum, 1):
-    indexnum = int(i + 1)
-    keys = chemnamesl
-    valuesr = coeffsr[i][:]
-    valuesp = coeffsp[i][:]
-    dictionary = {"Ea": indexnum, "K_Value": indexnum, "Reverse": reverse[i], "Reactants": dict(zip(keys, valuesr)), "Products": dict(zip(keys, valuesp))}
-    Initreactions.append(dictionary)
+    def eafl(self):
+        return self.eaf
 
-for i in range(0, len(chemnamesl), 1):
-    indexnum = int(i + 1)
-    namev = chemnamesl[i]
-    name_index = chemnamesl.index(namev)
-    keys = rxns_strs
-    valuesfor = [0*ij for ij in range(0, rxnnum, 1)]
-    valuesrev = [0*ik for ik in range(0, rxnnum, 1)]
-    for j in range(0, rxnnum, 1):
-        valuef = coeffsr[j][name_index]
-        if valuef != 0 and coeffsp[j][name_index] == 0:
-            valuesfor[j] = int(-1)
-            valuesrev[j] = int(1*reverse[j])
-        elif coeffsp[j][name_index] != 0:
-            valuesfor[j] = int(1)
-            valuesrev[j] = int(-1*reverse[j])
-    dictionary2 = {"Name": "{}".format(str(namev)), "Reactions": dict(zip(keys, valuesfor)), "Reverse": dict(zip(keys, valuesrev))}
-    Eqlist.append(dictionary2)
+    def RRl(self):
+        return self.RR
+
+    def close_window(self):
+        global entry
+        entry = int(self.chems.get())
+        self.chemnumsl.append(entry)
+        entry2 = int(self.rxns.get())
+        self.rxnsvl.append(entry2)
+        entry3 = str(self.indvard.get())
+        self.indvdf.append(r'{}'.format(entry3))
+        entry4 = str(r'{}'.format(self.filev.get()))
+        self.ffpath.append(entry4)
+        rval = float(self.rg.get())
+        self.RR.append(rval)
+        self.root.destroy()
+
+    def close_window2(self):
+        global entry
+        for i in range(0, self.chemnumsl[0], 1):
+            entry2 = str(self.entries[i].get())
+            self.chemnamesl.append(entry2)
+        self.root2.destroy()
+
+    def close_window3(self):
+        global entry
+        for i in range(0, self.self.rxnsvl[0], 1):
+            entry3a = int(self.entriesr[i].get())
+            self.reactants_num.append(entry3a)
+            entry3b = int(self.entriesp[i].get())
+            self.products_num.append(entry3b)
+            entry3c = int(self.intvars[i].get())
+            entryk = float(self.entriesk[i].get())
+            self.kk.append(entryk)
+            entryea = float(self.entriesea[i].get())
+            self.eaf.append(entryea)
+            self.reverse.append(entry3c)
+        self.root3.destroy()
+
+    def close_window4(self):
+        global entry
+        num_chems = int(len(self.chemnamesl))
+        for i in range(0, self.self.rxnsvl[0], 1):
+            cfsr = [0*ij for ij in range(0, num_chems, 1)]
+            cfsp = [0*ik for ik in range(0, num_chems, 1)]
+            for j in range(0, self.reactants_num[i], 1):
+                entry4r = self.entriesrc[i][j].get()
+                indexr = self.chemnamesl.index(entry4r)
+                cfsr[indexr] = int(self.entriesr4[i][j].get())
+            self.coeffsr.append(cfsr[:])
+            cfsr.clear()
+            for k in range(0, self.products_num[i], 1):
+                entry4p = self.entriespc[i][k].get()
+                indexp = self.chemnamesl.index(entry4p)
+                cfsp[indexp] = int(self.entriesp4[i][k].get())
+            self.coeffsp.append(cfsp[:])
+            cfsp.clear()
+        self.root4.destroy()
+
+    def first():
+
+        chemnumsl1 = []
+        rxnsvl1 = []
+        RR1 = []
+        indvdf1 = []
+        ffpath1 = []
+
+        def close_window1():
+            global entry
+            entry = int(chems.get())
+            chemnumsl1.append(entry)
+            entry2 = int(rxns1.get())
+            rxnsvl1.append(entry2)
+            entry3 = str(indvard1.get())
+            indvdf1.append(r'{}'.format(entry3))
+            entry4 = str(r'{}'.format(filev1.get()))
+            ffpath1.append(entry4)
+            rval1 = float(rg1.get())
+            RR1.append(rval1)
+            root1b.destroy()
+
+        root1b = Tk()
+        root1b.title("Number of chemical species")
+        mainframe = ttk.Frame(root1b, padding="3 3 12 12")
+        mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+        root1b.columnconfigure(0, weight=1)
+        root1b.rowconfigure(0, weight=1)
+        chemnums = StringVar()
+        chems = Entry(mainframe, width=7, textvariable=chemnums)
+        chems.grid(column=2, row=1, sticky=(W, N, E, S))
+        Label(mainframe, text="Enter total number of chemical species ").grid(column=1, row=1, sticky=(W, N, E, S))
+        rnums = StringVar()
+        rxns1 = Entry(mainframe, width=7, textvariable=rnums)
+        rxns1.grid(column=2, row=2, sticky=(W, N, E, S))
+        Label(mainframe, text="Enter total number of chemical reactions ").grid(column=1, row=2, sticky=(W, N, E, S))
+        indvard1 = StringVar()
+        inv = Entry(mainframe, width=7, textvariable=indvard1)
+        inv.grid(column=2, row=3, sticky=(W, N, E, S))
+        Label(mainframe, text="Enter independent variable ").grid(column=1, row=3, sticky=(W, N, E, S))
+        filep1 = StringVar(value=path_fol)
+        filev1 = Entry(mainframe, width=50, textvariable=filep1)
+        filev1.grid(column=2, row=4, sticky=(W, N, E, S))
+        Label(mainframe, text="Enter file path ").grid(column=1, row=4, sticky=(W, N, E, S))
+        rgas1 = StringVar(value="8.31446261815324")
+        rg1 = Entry(mainframe, width=7, textvariable=rgas1)
+        rg1.grid(column=2, row=5, sticky=(W, N, E, S))
+        Label(mainframe, text="Enter Gas Constant ").grid(column=1, row=5, sticky=(W, N, E, S))
+        B1 = Button(root1b, text="OK", command=close_window1).grid(column=3, row=1)
+        root1b.mainloop()
+        return chemnumsl1, rxnsvl1, indvdf1, RR1, ffpath1
+
+    # chems_value, rxnsvl1, rxnnum, rxnnumr, indvdf1b, RR, ffpath = first()
+
+    # chems_value = property(chemnumsll1[0])
+
+    # rxnnum = int(property(rxnsvll1[0]))
+    # rxnnumr = [int(i + 1) for i in range(rxnnum)]
+
+    def second(chems_value):
+
+        chemnamesl = []
+
+        def close_window2b():
+            global entry
+            for i in range(0, chems_value, 1):
+                entry2 = str(entries2B[i].get())
+                chemnamesl.append(entry2)
+            root2b.destroy()
+
+        root2b = Tk()
+        root2b.title("Name of chemical species")
+        mainframe2b = ttk.Frame(root2b, padding="3 3 12 12")
+        mainframe2b.grid(column=0, row=0, sticky=(N, W, E, S))
+        root2b.columnconfigure(0, weight=1)
+        root2b.rowconfigure(0, weight=1)
+        stringvars2b = []
+        entries2B = []
+        for i in range(0, chems_value, 1):
+            stringvars2b.append(StringVar())
+        for i in range(0, chems_value, 1):
+            entries2B.append(Entry(mainframe2b, width=20, textvariable=stringvars2b[i]))
+            entries2B[i].grid(column=2, row=int(i + 1), sticky=(W, N, E, S))
+            Label(mainframe2b, text="Enter name of chemical species {} ".format(i + 1)).grid(column=1, row=int(i + 1), sticky=(W, N, E, S))
+        B2b = Button(root2b, text="OK", command=close_window2b).grid(column=3, row=1)
+        root2b.mainloop()
+
+        return chemnamesl
+
+    # chemnamesl = second(chems_value)
+
+    def third(rxnnumr, rxnnum):
+
+        reactants_num3b = []
+        products_num3b = []
+        kk3b = []
+        eaf3b = []
+        reverse3b = []
+
+        def close_window3b():
+            global entry
+            for i in range(0, rxnnum, 1):
+                entry3a = int(entriesr3b[i].get())
+                reactants_num3b.append(entry3a)
+                entry3b = int(entriesp3b[i].get())
+                products_num3b.append(entry3b)
+                entry3c = int(intvars3b[i].get())
+                entryk = float(entriesk3b[i].get())
+                kk3b.append(entryk)
+                entryea = float(entriesea3b[i].get())
+                eaf3b.append(entryea)
+                reverse3b.append(entry3c)
+            root3b.destroy()
+
+        root3b = Tk()
+        root3b.title("Reactants & Products")
+        mainframe3b = ttk.Frame(root3b, padding="3 3 12 12")
+        mainframe3b.grid(column=0, row=0, sticky=(N, W, E))
+        root3b.columnconfigure(0, weight=1)
+        root3b.rowconfigure(0, weight=1)
+        root3b.rowconfigure(1, weight=1)
+        stringvarsr3b = []
+        stringvarsp3b = []
+        stringvarsk3b = []
+        stringvarsea3b = []
+        intvars3b = []
+        entriesr3b = []
+        entriesp3b = []
+        entriesc3b = []
+        entriesk3b = []
+        entriesea3b = []
+        for i in rxnnumr:
+            stringvarsr3b.append(StringVar())
+            stringvarsp3b.append(StringVar())
+            stringvarsk3b.append(StringVar())
+            stringvarsea3b.append(StringVar())
+            intvars3b.append(IntVar())
+        for i in rxnnumr:
+            mainframe3b.rowconfigure(i, weight=1)
+            coli0 = 0
+            coli1 = coli0 + 1
+            coli2 = coli1 + 1
+            coli3 = coli2 + 1
+            coli4 = coli3 + 1
+            coli5 = coli4 + 1
+            coli6 = coli5 + 1
+            coli7 = coli6 + 1
+            coli8 = coli7 + 1
+            coli9 = coli8 + 1
+            coli10 = coli9 + 1
+            clist = [i for i in range(coli10 + 1)]
+            for ci in clist:
+                mainframe3b.columnconfigure(ci, weight=1)
+            Pad_x = 5
+            Pad_y = 2
+            CE = 2
+            group0 = Label(mainframe3b, text="Reaction Number", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli0, columnspan=1, sticky=(W, N, E, S))
+            group1 = Label(mainframe3b, text="Number of Reactants", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli1, columnspan=2, sticky=(W, N, E, S))
+            group2 = Label(mainframe3b, text="Number of Products", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli3, columnspan=2, sticky=(W, N, E, S))
+            group3 = Label(mainframe3b, text="Reaction Constant", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli5, columnspan=2, sticky=(W, N, E, S))
+            group4 = Label(mainframe3b, text="Activation Energy", padx=Pad_x, pady=Pad_y).grid(row=0, column=coli7, columnspan=2, sticky=(W, N, E, S))
+            Box_1 = Entry(mainframe3b, width=7, textvariable=stringvarsr3b[i - 1])
+            Box_1.grid(column=coli1, row=i, columnspan=CE, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
+            Label_0 = Label(mainframe3b, text="Reaction {} ".format(i), padx=Pad_x, pady=Pad_y)
+            Label_0.grid(column=coli0, row=i, sticky=(W, N, E, S))
+            Label_0.rowconfigure(int(i), weight=1)
+            Label_0.columnconfigure(coli0, weight=1)
+            entriesr3b.append(Box_1)
+            entriesp3b.append(Entry(mainframe3b, width=7, textvariable=stringvarsp3b[i - 1]))
+            entriesp3b[i - 1].grid(column=coli3, row=i, columnspan=CE, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
+            entriesk3b.append(Entry(mainframe3b, width=7, textvariable=stringvarsk3b[i - 1]))
+            entriesk3b[i - 1].grid(column=coli6, row=i, columnspan=1, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
+            if len(str(i)) >= 2:
+                Label(mainframe3b, text='k{}{}'.format(chr(0x2080 + int(str(i)[0])), chr(0x2080 + int(str(i)[-1])))).grid(column=coli5, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
+            elif len(str(i)) == 1:
+                Label(mainframe3b, text='k{}'.format(chr(0x2080 + int(str(i)[0])))).grid(column=coli5, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
+            entriesea3b.append(Entry(mainframe3b, width=7, textvariable=stringvarsea3b[i - 1]))
+            entriesea3b[i - 1].grid(column=coli8, row=i, columnspan=1, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
+            if len(str(i)) >= 2:
+                Label(mainframe3b, text='Ea{}{} [kJ/mol]'.format(chr(0x2080 + int(str(i)[0])), chr(0x2080 + int(str(i)[-1])))).grid(column=coli7, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
+            elif len(str(i)) == 1:
+                Label(mainframe3b, text='Ea{} [kJ/mol]'.format(chr(0x2080 + int(str(i)[0])))).grid(column=coli7, row=i, sticky=(W, N, E, S), padx=Pad_x, pady=Pad_y)
+            entriesc3b.append(Checkbutton(mainframe3b, text="Reaction {} Reversable".format(i), variable=intvars3b[i - 1]).grid(column=coli9, row=i, columnspan=2, sticky=(W, N, E, S)))
+        B3b = Button(root3b, text="OK", command=close_window3b).grid(column=coli9, row=1, padx=Pad_x, pady=Pad_y)
+        root3b.mainloop()
+
+        return reactants_num3b, products_num3b, kk3b, eaf3b, reverse3b
+
+    # reactants_num, products_num, kk, eaf, reverse = third(rxnnumr, rxnsvl1)
+
+    def fourth(chemnamesl, rxnnum, reactants_num, products_num, reverse):
+        coeffsp4b = []
+        coeffsr4b = []
+        Initreactions4b = []
+        Eqlist4b = []
+
+        def close_window4b():
+            global entry
+            num_chems = int(len(chemnamesl))
+            for i in range(0, rxnnum, 1):
+                cfsr = [0*ij for ij in range(0, num_chems, 1)]
+                cfsp = [0*ik for ik in range(0, num_chems, 1)]
+                for j in range(0, reactants_num[i], 1):
+                    entry4r = entriesrc[i][j].get()
+                    indexr = chemnamesl.index(entry4r)
+                    cfsr[indexr] = int(entriesr4[i][j].get())
+                coeffsr4b.append(cfsr[:])
+                cfsr.clear()
+                for k in range(0, products_num[i], 1):
+                    entry4p = entriespc[i][k].get()
+                    indexp = chemnamesl.index(entry4p)
+                    cfsp[indexp] = int(entriesp4[i][k].get())
+                coeffsp4b.append(cfsp[:])
+                cfsp.clear()
+            root4b.destroy()
+
+        root4b = Tk()
+        root4b.title("Reactions")
+        mainframe4b = ttk.Frame(root4b, padding="3 3 12 12")
+        mainframe4b.grid(column=0, row=0, sticky=(N, W, E, S))
+        root4b.columnconfigure(0, weight=1)
+        root4b.rowconfigure(0, weight=1)
+        stringvarsr4 = []
+        stringvarsp4 = []
+        stringvarsrc = []
+        stringvarspc = []
+        entriesr4a = []
+        entriesp4a = []
+        entriesr4 = []
+        entriesp4 = []
+        entriesrca = []
+        entriespca = []
+        entriesrc = []
+        entriespc = []
+        rstrings = []
+
+        num_chems = len(chemnamesl)
+        for i in range(0, rxnnum, 1):
+            rval = reverse[i]
+            if rval == 0:
+                rstrings.append(u"\u2192")
+            elif rval == 1:
+                rstrings.append(u"\u21CB")
+        for i in range(0, rxnnum, 1):
+            stringvarsr4.append([StringVar(value="1") for i in range(0, reactants_num[i], 1)])
+            stringvarsp4.append([StringVar(value="1") for i in range(0, products_num[i], 1)])
+            stringvarsrc.append([StringVar(value="1") for i in range(0, reactants_num[i], 1)])
+            stringvarspc.append([StringVar(value="1") for i in range(0, products_num[i], 1)])
+
+        for i in range(0, rxnnum, 1):
+            mainframe4b.rowconfigure(i + 1, weight=1)
+            rangeval = int(reactants_num[i])
+            rangep = int(products_num[i])
+            rval2 = int(reactants_num[i])*2 + 1
+            int1 = 1
+            int2 = 2
+            jval = 1
+            for j in range(0, reactants_num[i], 1):
+                mainframe4b.columnconfigure(jval, weight=1)
+                entriesr4a.append(Entry(mainframe4b, width=7, textvariable=stringvarsr4[i][j]))
+                entriesr4a[-1].grid(column=jval, row=int(i + 1))
+                jval += 1
+                mainframe4b.columnconfigure(jval, weight=1)
+                combbo = Combobox(mainframe4b, values=chemnamesl)
+                combbo.grid(column=jval, row=int(i + 1))
+                jval += 1
+                mainframe4b.columnconfigure(jval, weight=1)
+                entriesrca.append(combbo)
+                if j < reactants_num[i]-1:
+                    mainframe4b.columnconfigure(jval, weight=1)
+                    Label(mainframe4b, text=" + ").grid(column=jval, row=int(i + 1))
+                    jval += 1
+                elif j == reactants_num[i]-1:
+                    mainframe4b.columnconfigure(jval, weight=1)
+                    Label(mainframe4b, text=" {} ".format(rstrings[i])).grid(column=jval, row=int(i + 1))
+                    jval += 1
+                int1 += 1
+                int2 += 1
+            endp = rval2 + products_num[i]+1
+            entriesr4.append(entriesr4a[:])
+            entriesr4a.clear()
+            entriesrc.append(entriesrca[:])
+            entriesrca.clear()
+            for k in range(0, products_num[i], 1):
+                int1b = 1
+                int2b = 2
+                mainframe4b.columnconfigure(jval, weight=1)
+                entriesp4a.append(Entry(mainframe4b, width=7, textvariable=stringvarsp4[i][k]))
+                entriesp4a[-1].grid(column=jval, row=int(i + 1))
+                jval += 1
+                mainframe4b.columnconfigure(jval, weight=1)
+                combbb = Combobox(mainframe4b, values=chemnamesl)
+                combbb.grid(column=jval, row=int(i + 1))
+                jval += 1
+                mainframe4b.columnconfigure(jval, weight=1)
+                entriespca.append(combbb)
+                if k < products_num[i]-1:
+                    Label(mainframe4b, text=" + ").grid(column=jval, row=int(i + 1))
+                    jval += 1
+                    mainframe4b.columnconfigure(jval, weight=1)
+                else:
+                    mainframe4b.rowconfigure(int(rxnnum) + 2, weight=1)
+                    B5 = Button(root4b, text="OK", command=close_window4b).grid(column=2, row=int(rxnnum+2))
+            entriesp4.append(entriesp4a[:])
+            entriesp4a.clear()
+            entriespc.append(entriespca[:])
+            entriespca.clear()
+        root4b.mainloop()
+
+        rxns_strs = ["Reaction {}".format(int(i + 1)) for i in range(0, rxnnum, 1)]
+
+        for i in range(0, rxnnum, 1):
+            indexnum = int(i + 1)
+            keys = chemnamesl
+            valuesr = coeffsr4b[i][:]
+            valuesp = coeffsp4b[i][:]
+            dictionary = {"Ea": indexnum, "K_Value": indexnum, "Reverse": reverse[i], "Reactants": dict(zip(keys, valuesr)), "Products": dict(zip(keys, valuesp))}
+            Initreactions4b.append(dictionary)
+
+        for i in range(0, len(chemnamesl), 1):
+            indexnum = int(i + 1)
+            namev = chemnamesl[i]
+            name_index = chemnamesl[i].index(namev)
+            keys = rxns_strs
+            valuesfor = [0*ij for ij in range(0, rxnnum, 1)]
+            valuesrev = [0*ik for ik in range(0, rxnnum, 1)]
+            for j in range(0, rxnnum, 1):
+                valuef = coeffsr4b[j][name_index]
+                if valuef != 0 and coeffsp4b[j][name_index] == 0:
+                    valuesfor[j] = int(-1)
+                    valuesrev[j] = int(1*reverse[j])
+                elif coeffsp4b[j][name_index] != 0:
+                    valuesfor[j] = int(1)
+                    valuesrev[j] = int(-1*reverse[j])
+            dictionary2 = {"Name": "{}".format(str(namev)), "Reactions": dict(zip(keys, valuesfor)), "Reverse": dict(zip(keys, valuesrev))}
+            Eqlist4b.append(dictionary2)
+
+            return Initreactions4b, Eqlist4b
+
+    def fullgui():
+        chemnumsl, rxnsvl, indvdf, RR, ffpath = guivar.first()
+        chems_value = chemnumsl[0]
+        rxnnum = int(rxnsvl[0])
+        rxnnumr = [int(i + 1) for i in range(rxnnum)]
+        chemnamesl = guivar.second(chems_value)
+        reactants_num, products_num, kk, eaf, reverse = guivar.third(rxnnumr, rxnnum)
+        Initreactions, Eqlist = guivar.fourth(chemnamesl, rxnnum, reactants_num, products_num, reverse)
+        return chemnamesl, rxnnum, Initreactions, Eqlist, indvdf[0], ffpath[0], kk, kJtoJ(eaf), RR[0]
 
 
 class symbolgen:
@@ -373,7 +526,7 @@ class symbolgen:
         return self.initlist
 
     def latexin(self):
-        latexs = self.eqlist(Eqlist, self.reactants, self.products)[1]
+        latexs = self.eqlist(self.Eqlist, self.reactants, self.products)[1]
         return latexs
 
     def symsinit(self):
@@ -973,10 +1126,11 @@ class symbolgen:
             print("Coulnd't convert tex file.")
             pass
 
+# Generates all necessary lists and values.
 
-ea = [i*1000.0 for i in eaf]
-RRv = RR[0]
-rxnnumf = rxnsvl[0]
-C, KKS, EAS, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacnumpy, Jacmath, JacSimple, lm, latexmatrix, jacsy, jacnumpysy, jacmathsy, jacsimplesy, lmsy, latexmatrixsy = symbolgen.fullgen(chemnamesl, rxnnumf, Initreactions, Eqlist, indvdf[0], ffpath[0], kk, ea, RRv)
-# print(rhs)
-# print(rhsf)
+
+# chemnamesl, rxnsvl, Initreactions, Eqlist, indvdf, ffpath, kk, eaf, RR = guivar.fullgui()
+
+# Calculates the jacobian and all other desired functions
+
+# C, KKS, EAS, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacnumpy, Jacmath, JacSimple, lm, latexmatrix, jacsy, jacnumpysy, jacmathsy, jacsimplesy, lmsy, latexmatrixsy = symbolgen.fullgen(chemnamesl, rxnsvl, Initreactions, Eqlist, indvdf, ffpath, kk, kJtoJ(eaf), RR)
