@@ -8,6 +8,7 @@ Generator for symbolic functions for both full and simple systems
 
 # Installation 
 ##  `pip install chemsys` 
+##  `conda install -c tjczec01 chemsys` 
 
 
 # 1. Chemical reactions
@@ -40,4 +41,3 @@ The **Jacobian matrix** is symbolically generated in order to improve the accura
 # 5.2 Calculate the jacobian and all other desired functions as follows.
 
 ```C, KKS, EAS, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacnumpy, Jacmath, JacSimple, lm, latexmatrix, jacsy, jacnumpysy, jacmathsy, jacsimplesy, lmsy, latexmatrixsy = symbolgen.fullgen(chemnamesl, rxnsvl, Initreactions, Eqlist, indvdf, ffpath, kk, kJtoJ(eaf), RR)```
-
