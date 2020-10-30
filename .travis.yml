@@ -1,20 +1,16 @@
 language: python
-os:
-  - windows
-compiler:
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"      # current default Python on Travis CI
   - "3.7"
-env:
-  - SCIPY_VER="scipy>=0.18.0" 
-matrix:
-  fast_finish: true
-notifications:
-  email: false
+  - "3.8"
+  - "3.8-dev"  # 3.8 development branch
+  - "nightly"  # nightly build
+# command to install dependencies
 install:
-  - conda update conda
-  - conda info -a
-  - conda create -q -n test-environment python=$CC numpy scipy pandas matplotlib pip pytest sympy
-  - source activate test-environment
-  - conda install conda
-  - python setup.py -q install
+  - pip install -r requirements.txt
+# command to run tests
 script:
-  - cd tests
+  - pytest
