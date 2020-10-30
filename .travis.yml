@@ -13,8 +13,7 @@ matrix:
 notifications:
   email: false
 install:
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
+  - conda update conda
   - conda info -a
   - conda create -q -n test-environment python=$CC numpy scipy pandas matplotlib pip pytest sympy
   - source activate test-environment
@@ -22,5 +21,3 @@ install:
   - python setup.py -q install
 script:
   - cd tests
-after_success:
-  - coveralls
