@@ -1,7 +1,7 @@
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $ {{ secrets.CHEMSYS1 }}  # Set in the settings page of your repository, as a secure variable
+  github_token: 58bd8e4b7d14689901a21d2a72029f1d08711152  # Set in the settings page of your repository, as a secure variable
   keep_history: true
   on:
     branch: master
