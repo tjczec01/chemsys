@@ -14,7 +14,7 @@ jobs:
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $ {{ secrets.chemsys1 }}  # Set in the settings page of your repository, as a secure variable
+  github_token: $ {{ secrets.CHEMSYS1 }}  # Set in the settings page of your repository, as a secure variable
   keep_history: true
   on:
     branch: master
