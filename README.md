@@ -44,7 +44,8 @@ import chemsys.chemsystest
 cs = chemsys.chemsys
 cst = chemsys.chemsystest
 
-chemnamesl, rxnsvl, Initreactions, Eqlist, indvdf, ffpath, kk, eaf, RR = guivar.fullgui()```
+chemical_names, number_of_reactions, Initial_reactions, Equation_list, indvdf, filepath, kvalues, ea_values, r_gas = cs.gui.fullgui()
+```
 
 # 5.2 Calculate the jacobian and all other desired functions as follows.
 
