@@ -1,19 +1,29 @@
-build: false
-
-environment:
-  matrix:
-    - PYTHON: 2.7
-    - PYTHON: 3.5
-    - PYTHON: 3.7
-
-platform:
-  - x86
-  - x64
-  
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: 58bd8e4b7d14689901a21d2a72029f1d08711152  # Set in the settings page of your repository, as a secure variable
-  keep_history: true
-  on:
-    branch: master
+language: python
+os:
+  - windows
+compiler:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+env:
+  - SCIPY_VER="scipy>=0.18.0" 
+matrix:
+  fast_finish: true
+notifications:
+  email: false
+install:
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda create -q -n test-environment python=$CC numpy scipy pandas matplotlib pip pytest sympy
+  - source activate test-environment
+  - conda install $SCIPY_VER
+  - python setup.py -q install
+script:
+  - cd tests
+after_success:
+  - coveralls
