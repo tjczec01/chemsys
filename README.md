@@ -38,15 +38,12 @@ The **Jacobian matrix** is symbolically generated in order to improve the accura
 # 5.1 Generate all necessary lists and values as follows.
 
 ```
-import chemsys.chemsys
-import chemsys.chemsystest
-
-cs = chemsys.chemsys
-cst = chemsys.chemsystest
-
-chemical_names, number_of_reactions, Initial_reactions, Equation_list, indvdf, filepath, kvalues, ea_values, r_gas = cs.gui.fullgui()
+import chemsys.chemsys as cs 
+chemical_names, number_of_reactions, Initial_reactions, Equation_list, indvdf, filepath, kvalues, ea_values, r_gas, pdf_path = cs.gui.fullgui()  # Generates all necessary lists and values.
 ```
 
 # 5.2 Calculate the jacobian and all other desired functions as follows.
 
-```C, KKS, EAS, reacts, prods, equations, slat, dlat, chem, chemD, chemw, rhs, rhsf, jac, jacnumpy, Jacmath, JacSimple, lm, latexmatrix, jacsy, jacnumpysy, jacmathsy, jacsimplesy, lmsy, latexmatrixsy = symbolgen.fullgen(chemnamesl, rxnsvl, Initreactions, Eqlist, indvdf, ffpath, kk, kJtoJ(eaf), RR)```
+```
+C_Symbols, K_Vals, EA_Vals, reactants, products, equations, slat, dlat, chem, chemD, chemw, right_hand_side, right_hand_sidef, Jac, Jac_numpy, Jac_math, Jac_Simple, lm, latex_matrix, Jac_symbol, Jac_numpy_symbol, Jac_math_symbol, Jac_simple_symbol, lm_symbol, latex_matrix_symbol, DLatb = cs.symbolgen.fullgen(chemical_names, number_of_reactions, Initial_reactions, Equation_list, indvdf, filepath, kvalues, ea_values, r_gas, chemical_names, pdf_path)
+```
