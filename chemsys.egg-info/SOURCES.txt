@@ -1,0 +1,14 @@
+MANIFEST.in
+README.md
+setup.py
+chemsys/__init__.py
+chemsys/chemsystestn.py
+chemsys/chemsystestpdflatex.py
+chemsys/cs.py
+chemsys/csg.py
+chemsys/cspdf.py
+chemsys/cst.py
+chemsys.egg-info/PKG-INFO
+chemsys.egg-info/SOURCES.txt
+chemsys.egg-info/dependency_links.txt
+chemsys.egg-info/top_level.txt

@@ -1,0 +1,49 @@
+# This file created by conda-build 3.20.5
+# meta.yaml template originally from:
+# ChemSys, last modified Thu Oct 29 14:12:07 2020
+# ------------------------------------------------
+
+package:
+    name: ChemSys
+    version: 1.0.40
+source:
+    sha256: 40ae0386ef57dba3be139306ce41a94b781318ca97fbd9951b75b532a64b3663
+    url: https://pypi.io/packages/source/C/ChemSys/ChemSys-1.0.39.tar.gz
+build:
+    number: '1'
+    script: C:\Users\tjcze\anaconda3\conda-bld\chemsys_1604011725942\_h_env\python.exe
+        -m pip install . -vv
+    string: py40_1
+requirements:
+    host:
+        - ca-certificates 2020.10.14 0
+        - certifi 2020.6.20 py38haa95532_2
+        - openssl 1.1.1h he774522_0
+        - pip 20.2.4 py38_0
+        - python 3.8.5 h5fd99cc_1
+        - setuptools 50.3.0 py38h9490d1a_1
+        - sqlite 3.33.0 h2a8f88b_0
+        - vc 14.1 h0510ff6_4
+        - vs2015_runtime 14.16.27012 hf0eaf9b_3
+        - wheel 0.35.1 py_0
+        - wincertstore 0.2 py38_0
+        - zlib 1.2.11 h62dcd97_4
+    run:
+        - python >=3.8,<3.9.0a0
+about:
+    dev_url: null
+    doc_url: null
+    home: https://github.com/tjczec01/chemsys
+    license: MIT
+    license_family: MIT
+    license_file: null
+    summary: Interactive GUI based program that generates the overall species balance,
+        system of ODEs needed for the solve_ivp and odeint method, and calculates
+        the Jacobian both symbolically and numerically. The resulting code can easily
+        be copied and pasted as is to be integrated with the aforementioned SciPy
+        functions.
+extra:
+    copy_test_source_files: true
+    final: true
+    recipe-maintainers:
+        - tjczec01

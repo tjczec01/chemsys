@@ -1,0 +1,8 @@
+numpy
+sphinx
+IPython
+tkinter
+sympy
+matplotlib
+nose
+sphinx
