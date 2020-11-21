@@ -38,7 +38,7 @@ The **Jacobian matrix** is symbolically generated in order to improve the accura
 # 5.1 Generate all necessary lists and values as follows.
 
 ```
-from chemsys import *
+from chemsys.cs import gui, symbolgen
 chemical_names, number_of_reactions, Initial_reactions, Equation_list, indvdf, filepath, kvalues, ea_values, r_gas, pdf_path = gui.fullgui()
 ```
 
