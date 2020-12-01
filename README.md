@@ -54,4 +54,4 @@ C_Symbols, K_Vals, EA_Vals, reactants, products, equations, slat, dlat, chem, ch
 Czechorski, Travis J, "A kinetic and thermodynamic model of ethylene dichloride pyrolysis." (2019). Electronic Theses and Dissertations. Paper 3359.
 Retrieved from https://ir.library.louisville.edu/etd/3359 
 
-"Reference the thesis by Travis Czechorski under the supervision of Dr. Vance Jaeger."
+Reference the thesis by Travis Czechorski under the supervision of Dr. Vance Jaeger.
