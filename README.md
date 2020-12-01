@@ -46,4 +46,12 @@ chemical_names, number_of_reactions, Initial_reactions, Equation_list, indvdf, f
 
 ```
 C_Symbols, K_Vals, EA_Vals, reactants, products, equations, slat, dlat, chem, chemD, chemw, right_hand_side, right_hand_sidef, Jac, Jac_numpy, Jac_math, Jac_Simple, lm, latex_matrix, Jac_symbol, Jac_numpy_symbol, Jac_math_symbol, Jac_simple_symbol, lm_symbol, latex_matrix_symbol, DLatb = symbolgen.fullgen(chemical_names, number_of_reactions, Initial_reactions, Equation_list, indvdf, filepath, kvalues, ea_values, r_gas, chemical_names, pdf_path)
+
 ```
+
+# 6.1 References
+
+Czechorski, Travis J, "A kinetic and thermodynamic model of ethylene dichloride pyrolysis." (2019). Electronic Theses and Dissertations. Paper 3359.
+Retrieved from https://ir.library.louisville.edu/etd/3359 
+
+"Reference the thesis by Travis Czechorski under the supervision of Dr. Vance Jaeger."
