@@ -1,6 +1,6 @@
 # Chemical System Generator
 Generator for symbolic functions for both full and simple systems
-* [Symbolic Generator](https://github.com/tjczec01/symbolgen/blob/master/symbolgen.ipynb)
+* [Symbolic Generator](https://github.com/tjczec01/chemsys/blob/master/symbolgen.ipynb)
 
 # Symbol Generator
 
