@@ -27,7 +27,8 @@ start = time.time()  # Real time when the program starts to run
 
 warnings.filterwarnings("ignore")  # ,category=matplotlib.cbook.mplDeprecation
 plt.rcParams['text.usetex'] = True
-plt.rcParams['text.latex.preamble'] = [r'\usepackage{mathtools}', r'\usepackage{bm}']
+plt.rcParams['text.latex.preamble'] = r"\usepackage{bm} \usepackage{amsmath}"
+#plt.rcParams['text.latex.preamble'] = [r'\usepackage{mathtools}', r'\usepackage{bm}']
 # matplotlib.rc_params(fail_on_error=False)
 plt.rcdefaults()
 
