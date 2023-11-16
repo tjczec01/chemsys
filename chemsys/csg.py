@@ -29,7 +29,8 @@ __all__ = ["gui", "symbolgen", "kJtoJ", "create_pdf"]
 warnings.filterwarnings("ignore")  # ,category=matplotlib.cbook.mplDeprecation
 plt.rcParams['text.usetex'] = True
 plt.rcParams['axes.grid'] = False
-plt.rcParams['text.latex.preamble'] = [r'\usepackage{mathtools}', r'\usepackage{bm}']
+plt.rcParams['text.latex.preamble'] = r"\usepackage{bm} \usepackage{amsmath}"
+#plt.rcParams['text.latex.preamble'] = [r'\usepackage{mathtools}', r'\usepackage{bm}']
 # matplotlib.rc_params(fail_on_error=False)
 # plt.rcdefaults()
 print(mpl.get_backend())
